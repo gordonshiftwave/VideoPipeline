@@ -1,0 +1,1893 @@
+{
+  "baseId": "appjow4jvzjySNd9x",
+  "baseName": "Active Video Projects",
+  "tableId": "tblbX5AOLbbGU7YjR",
+  "tableName": "Projects",
+  "exportedAt": "2026-09-21",
+  "count": 92,
+  "statusCounts": {
+    "Ready for Review": 13,
+    "Busy Briefing": 17,
+    "Editing In Progress": 22,
+    "Editing Not Started ( already Briefed)": 26,
+    "Reviewed - needs edits": 7,
+    "Complete": 4,
+    "On Hold": 3
+  },
+  "projects": [
+    {
+      "id": "rec1IckGh8lZKuMX9",
+      "createdTime": "2026-09-16T12:59:40.000Z",
+      "uniqueId": "SWE-0015",
+      "name": "Uk - 7431",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/d5b992e9-189a-4453-b343-3752b1d46cf2",
+      "sourceFootage": "https://drive.google.com/open?id=1bu6w6F75MpS3JBV2tIEz_CT_jjciaV1s&usp=drive_fs",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec1Ub3dhE21tfBr2",
+      "createdTime": "2026-09-17T13:34:09.000Z",
+      "uniqueId": "SWE-0063",
+      "name": "Brian Mackenzie Hypoxic Training/Shiftwave / Stacking",
+      "primaryMarket": "Pro Sports",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Brian Mackenzie  (Gordon)"
+      ],
+      "recordingDate": "2025-06-01",
+      "sourceFootage": "https://drive.google.com/drive/folders/1qO3H8atJ2Wq__roSZp92n9bKC2uU1YAu?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit + B-roll"
+    },
+    {
+      "id": "rec23alYJogJ8ZemY",
+      "createdTime": "2026-09-17T07:13:27.000Z",
+      "uniqueId": "SWE-0023",
+      "name": "Uk - 7449",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/aed89d5b-7d60-4f24-9626-71f14c76d970",
+      "sourceFootage": "https://drive.google.com/file/d/1udCvdEVoSClIXBtOiTZBrKDNVt5gBnJ1/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec2rqTJNI1PFtVsA",
+      "createdTime": "2026-09-17T13:26:17.000Z",
+      "uniqueId": "SWE-0058",
+      "name": "Julianne-senior",
+      "primaryMarket": "At-Home",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)"
+      ],
+      "recordingDate": "2026-08-21",
+      "sourceFootage": "https://drive.google.com/file/d/1jY6oNsL6dTJPAHcFurXpKggt8AbKBzk0/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "rec368ffWoi7fKyhf",
+      "createdTime": "2026-09-18T08:52:22.000Z",
+      "uniqueId": "SWE-0080",
+      "name": "Ann Zhang \u2014 Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2024-10-23",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.a2ytozsno0a9",
+      "sourceFootage": "https://drive.google.com/file/d/1Io_Dhyy7WXNavDPCNtk7yWK0tg2GBIIc/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "rec3CC5FmX5Ez0lwg",
+      "createdTime": "2026-09-16T13:10:05.000Z",
+      "uniqueId": "SWE-0018",
+      "name": "Uk - 6773",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/39c9d1e5-53e4-4929-b9e1-19304947ccb2",
+      "sourceFootage": "https://drive.google.com/file/d/17JH5rKDhUFM3ryUcvo_tXwshVfy2W2tZ/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec3e2M4EXa2fUsqc",
+      "createdTime": "2026-09-17T13:54:01.000Z",
+      "uniqueId": "SWE-0079",
+      "name": "Talia \u2014 Venice Lab Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.4irv3u6u19fi",
+      "sourceFootage": "https://drive.google.com/file/d/1D75QQ_1xGXATrRpzsri3Kd5PBwze3sL9/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "rec4BkrpB8L8loEkc",
+      "createdTime": "2026-09-17T07:15:27.000Z",
+      "uniqueId": "SWE-0030",
+      "name": "Uk - 0331",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/bc781ed9-4967-450a-b2e1-5c3c7de870f7",
+      "sourceFootage": "https://drive.google.com/file/d/1s7tRmpCcyktU4XfXyqgfPUsXvMCr7Twa/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec4wOc4prQByHKrl",
+      "createdTime": "2026-09-17T13:36:31.000Z",
+      "uniqueId": "SWE-0071",
+      "name": "Christina - Cognitive Clarity 1 & 2",
+      "primaryMarket": "At-Home",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Cognitive Clarity - Post Demo Experience (Gordon)"
+      ],
+      "recordingDate": "2026-08-21",
+      "sourceFootage": "https://drive.google.com/drive/folders/1I-YEYfJTgDeccRNmlV3zG2WKoWKIJ1nV?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit",
+      "questionsNotes": "Gordon lists two source clips (Christina - Cognitive Clarity 1 and 2), but Tom\u2019s testimonial brief does not cover Christina."
+    },
+    {
+      "id": "rec5QJJxRjd4JoA8a",
+      "createdTime": "2026-09-17T07:47:51.000Z",
+      "uniqueId": "SWE-0046",
+      "name": "Uk - 7437",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1-Ugfp6VZsx6v3Y_2ULX6Mk35ljbpHGoT/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec607vaT4IQrfDeY",
+      "createdTime": "2026-09-17T07:15:19.000Z",
+      "uniqueId": "SWE-0024",
+      "name": "Uk - 7875",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/c7666687-4fe1-44c1-beed-a4f82bb482be",
+      "sourceFootage": "https://drive.google.com/file/d/1470aFS2h6c1PPCAQjLzkjtv_2KcSnr6N/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec6G5MBbc23JfXKx",
+      "createdTime": "2026-09-17T13:38:06.000Z",
+      "uniqueId": "SWE-0074",
+      "name": "Erin \u2014 Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Reviewed - needs edits",
+      "priority": "Medium",
+      "videoTopic": [
+        "Erin SW Testimonial  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-06-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.yhsktrwnyvxo",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/7de4c8e2-8b74-4106-b364-57bd538289ab",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/drive/folders/1Lkn3TD63B5eqV7OS4BkRwzvLVwT1fhxC?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "rec8Op7lGbxSM2TKA",
+      "createdTime": "2026-09-17T07:54:13.000Z",
+      "uniqueId": "SWE-0056",
+      "name": "Uk - 7903",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1Ew93L0chUfgJMrnkD0DS4UTEKhfSe-eq/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec8il2mfTcNDXrdz",
+      "createdTime": "2026-09-16T12:27:32.000Z",
+      "uniqueId": "SWE-0008",
+      "name": "Ken + Roberto \u2014 Combined Caregiver Film",
+      "primaryMarket": "At-Home",
+      "status": "Reviewed - needs edits",
+      "priority": "High",
+      "videoTopic": [
+        "Seniors  (Gordon)",
+        "Care Givers (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-08-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.lutqnx478asr",
+      "reviewLink": " https://f.io/pMTupoCK",
+      "dateReviewLinkSent": "2026-09-11",
+      "sourceFootage": "https://drive.google.com/drive/folders/1UoYCYs-mDPMDwY8tg9AiHtfcmemj5JUg?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Person Combined Edit",
+      "questionsNotes": "the link would be the Ken and Roberto Videos as it is a combined video"
+    },
+    {
+      "id": "rec8qJ0BGK1sIuAXN",
+      "createdTime": "2026-09-17T07:15:23.000Z",
+      "uniqueId": "SWE-0026",
+      "name": "Uk - 7458",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/1b6f2742-c66b-4f01-b1b8-e81d7d61135f",
+      "sourceFootage": "https://drive.google.com/file/d/1I-cqXBy-KltTPyf1pUKhgSfBznqCHYU7/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec8xXIlb84bQCfdo",
+      "createdTime": "2026-09-16T12:56:53.000Z",
+      "uniqueId": "SWE-0013",
+      "name": "Uk - 7438",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/b322ae27-f4cf-4986-9e32-a12e47014bf7",
+      "sourceFootage": "https://drive.google.com/open?id=15cAWtLQqD385JpsECqyPXfbQO0gE8os2&usp=drive_fs",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec9Ew30PTXrBttOs",
+      "createdTime": "2026-09-16T12:58:41.000Z",
+      "uniqueId": "SWE-0014",
+      "name": "Uk - 0891",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/c6049957-03cb-436f-b8eb-bb9d2ab7d529",
+      "sourceFootage": "https://drive.google.com/open?id=1HEkuGM-NxOG-qiOonPitX-nT828B_nfT&usp=drive_fs",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rec9ui5MVrslxvv58",
+      "createdTime": "2026-09-18T14:24:15.000Z",
+      "uniqueId": "SWE-0087",
+      "name": "Ron-Carson-Journalist",
+      "primaryMarket": "Corporate",
+      "status": "Busy Briefing",
+      "priority": "Low",
+      "videoTopic": [
+        "SW Customer Review"
+      ],
+      "sourceFootage": "https://drive.google.com/file/d/17at2gUfUlZcU1ufRqZ1SQ_eJGpdDKUa3/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ],
+      "editType": "Single-Source Edit",
+      "questionsNotes": "found this on drive, cant find edited version so put in briefing folder"
+    },
+    {
+      "id": "recBJbd0mAeZTVBtP",
+      "createdTime": "2026-09-17T07:41:17.000Z",
+      "uniqueId": "SWE-0035",
+      "name": "Uk - 0337",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1wfi0ab4BCZJxB8yOEVXgwHFjUmxNAkeM/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recBLOdenKN2TZHxQ",
+      "createdTime": "2026-09-18T13:59:44.000Z",
+      "uniqueId": "SWE-0084",
+      "name": "University Alliance participant interview by Wyatt",
+      "primaryMarket": "Higher Education / Universities",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Interview"
+      ],
+      "sourceFootage": "https://drive.google.com/drive/folders/1Atop-Temyq1f1r5zRSGkjpMDCQNkb0Nh?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recCAi1IHd3tmT5Y8",
+      "createdTime": "2026-09-17T07:47:54.000Z",
+      "uniqueId": "SWE-0049",
+      "name": "Uk - 7842",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1cZRSXa-GabewKq5rwX8CToke7suUn9RH/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recCq8LRSug2neHtK",
+      "createdTime": "2026-09-17T13:36:27.000Z",
+      "uniqueId": "SWE-0069",
+      "name": "Karishma \u2014 Cognitive Clarity Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Complete",
+      "priority": "Medium",
+      "videoTopic": [
+        "Cognitive Clarity - Post Demo Experience (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "kpiEstDeliveryDate": "2026-09-18",
+      "kpiActualDeliveryDate": "2026-09-18",
+      "recordingDate": "2026-06-07",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.xrpj5opcog3d",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/79d33494-8e56-4a42-b755-7e409690059e",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/drive/folders/12h8tdRKthWs55LQc20yMblir-JjAjJxK?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit",
+      "finalApprovedVideoLink": "https://drive.google.com/file/d/1IBJPGnbExedxNVCfW54rd1jhVZky9ERs/view?usp=drive_link",
+      "evidenceLibraryHandoff": "In Evidence Library",
+      "evidenceLibrarySwoId": "SWO-0194",
+      "evidenceLibraryRecordUrl": "https://airtable.com/appcXdLAty16DgJFM/tblV6U3UlaazW9eLj/rech5Y4KLyxNNF8eg"
+    },
+    {
+      "id": "recDWswljNXf0o46G",
+      "createdTime": "2026-09-18T09:22:55.000Z",
+      "uniqueId": "SWE-0081",
+      "name": "Jesse Salas \u2014 Foundation Training Coach / Surfer",
+      "primaryMarket": "Clinics / Performance Centers",
+      "status": "On Hold",
+      "priority": "Low",
+      "videoTopic": [
+        "Jesse Salas - Foundation Training Coach/Surfer  (Gordon)"
+      ],
+      "recordingDate": "2025-08-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.xy18crui83w7",
+      "sourceFootage": "https://drive.google.com/file/d/1osl1y00QRREbPgHDIuTZuVuJun7yhpXm/view?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit",
+      "questionsNotes": "Tom\u2019s brief explicitly says NO ACTION \u2014 video too short/cut off."
+    },
+    {
+      "id": "recEYqi6tc6MqmobM",
+      "createdTime": "2026-09-18T13:54:22.000Z",
+      "uniqueId": "SWE-0083",
+      "name": "Ride the Tiger Reaction",
+      "primaryMarket": "At-Home",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "sourceFootage": "https://drive.google.com/open?id=1mnK65w2bsa_CMxfk0zcPQQtXeYofFE2G&usp=drive_fs",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recGTYQZ6e21eOqEP",
+      "createdTime": "2026-09-18T14:34:19.000Z",
+      "uniqueId": "SWE-0088",
+      "name": "Bulgarian Olympic swimmer Antani Ivanov at Enhanced Games",
+      "primaryMarket": "Pro Sports",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "recordingDate": "2026-05-01",
+      "sourceFootage": "https://drive.google.com/drive/folders/1Yvke2LdbEHmU7DqTmTFznNKsDfOVsi-I?usp=drive_link",
+      "requester": [
+        "Candice"
+      ],
+      "editType": "Multi-Source Edit"
+    },
+    {
+      "id": "recGZ8cwNI97vr3aB",
+      "createdTime": "2026-09-17T07:15:29.000Z",
+      "uniqueId": "SWE-0033",
+      "name": "Uk - 0186",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1wg8WCQCYRqZxOYXkaGV6RImK_7BFLzCE/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recGwhGQxGxE8A3B4",
+      "createdTime": "2026-09-17T13:35:02.000Z",
+      "uniqueId": "SWE-0065",
+      "name": "Traveling w/ Hard Case on Commercial ( 9 Snippet Videos)",
+      "primaryMarket": "At-Home",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Traveling w/ Hard Case on Commercial  (Gordon)"
+      ],
+      "recordingDate": "2025-11-01",
+      "sourceFootage": "https://drive.google.com/drive/folders/1SeWI9bYzUOlWYuGVBS32-FWWPS9AYgW_?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit"
+    },
+    {
+      "id": "recGyuacVKJJveoOI",
+      "createdTime": "2026-09-17T07:13:27.000Z",
+      "uniqueId": "SWE-0022",
+      "name": "Uk - 7878",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/838259f1-4add-48ba-aa63-5d81bb53a1dc",
+      "sourceFootage": "https://drive.google.com/file/d/1o1ntBzQMkmpV3dt0nekfIkNwJ9Cp72fi/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recHnVqQKEypZXs26",
+      "createdTime": "2026-09-18T12:59:44.000Z",
+      "uniqueId": "SWE-0082",
+      "name": "Griffin Jax - MLB ( Long for testimonial)",
+      "primaryMarket": "Pro Sports",
+      "status": "Reviewed - needs edits",
+      "priority": "Low",
+      "videoTopic": [
+        "SW Customer Review"
+      ],
+      "kpiStartDate": "2026-03-01",
+      "recordingDate": "2026-02-01",
+      "linkToBrief": "https://docs.google.com/document/d/16xZUhFAHwdTy_L7yL2IWl_ihr5WcM2JEDCgrjJWnKOg/edit?usp=sharing",
+      "reviewLink": "https://next.frame.io/share/f68de6f7-87bd-4fdb-afd0-15214f40cadb/view/5b6e8600-9296-4198-b601-e42fcdb9c2b9",
+      "dateReviewLinkSent": "2026-03-10",
+      "sourceFootage": "https://drive.google.com/open?id=11pGvyHlyDqgw0Kl7bLDfLoh92ZYRk9wX&usp=drive_fs",
+      "requester": [
+        "Candice",
+        "Tom"
+      ]
+    },
+    {
+      "id": "recIiPg1v00sffnpQ",
+      "createdTime": "2026-09-17T13:36:11.000Z",
+      "uniqueId": "SWE-0068",
+      "name": "Oksana \u2014 Ukrainian Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-05-16",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.hwfc8qnkhnyt",
+      "sourceFootage": "https://drive.google.com/file/d/1Kilr4tmwZWT4mLOs6mAe2Mt1k74DsJXJ/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recJ77rTspeSvPs27",
+      "createdTime": "2026-09-16T12:27:21.000Z",
+      "uniqueId": "SWE-0005",
+      "name": "Brooke Prenavel (Terminal Cancer)\u2014 PGA Testimonial",
+      "primaryMarket": "Golf",
+      "status": "Reviewed - needs edits",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)",
+        "PGA Show 2025  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2025-01-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.82s2wpcx3sc9",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/a98c287b-498d-4539-b1c0-6023dc745826",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/file/d/14szgNvV8TkjW_xpkOwD6iIv6pzRq5cKB/view",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recJHJ4ueJieP2Rne",
+      "createdTime": "2026-09-17T07:41:20.000Z",
+      "uniqueId": "SWE-0039",
+      "name": "Uk - 0866",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1N3_TptyKSWKPqs48TzgA2AzH_FoblD5v/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recJhA3CO2HOfgwTq",
+      "createdTime": "2026-09-18T14:36:00.000Z",
+      "uniqueId": "SWE-0089",
+      "name": "Taylor Anderson at Enhanced Games ",
+      "primaryMarket": "Pro Sports",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "recordingDate": "2026-05-01",
+      "linkToBrief": "https://drive.google.com/drive/folders/1dW8Nrgkc6l4K6PtNEnZ27cO2bnwURr8H?usp=drive_link",
+      "requester": [
+        "Candice"
+      ],
+      "editType": "Multi-Source Edit"
+    },
+    {
+      "id": "recKZuXUOVpHZWeBn",
+      "createdTime": "2026-09-17T13:38:32.000Z",
+      "uniqueId": "SWE-0075",
+      "name": "Frank \u2014 First Responder Testimonial",
+      "primaryMarket": "First Responders",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "First Responder/EMT + Wife + Wedding Testimonial - First responder + Wife- Nina and Frank  (Gordon) "
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-08-08",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.m97l6aggjqng",
+      "sourceFootage": "https://drive.google.com/drive/folders/1dToRgymBDRGlNxm43uKaP8jkq8KfF1XR?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit",
+      "questionsNotes": "Please note that I gave the link to both the husband's and the wife's testimonial because you might want to use the B-roll file in both videos. "
+    },
+    {
+      "id": "recKkC3ky9VX0U99f",
+      "createdTime": "2026-09-16T13:10:06.000Z",
+      "uniqueId": "SWE-0019",
+      "name": "Uk - 0188",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/354f9892-32df-4fcf-97ba-2121aabbcfa9",
+      "sourceFootage": "https://drive.google.com/file/d/1mEFUA9OjngCu9aa9dV-y3hdSIpWxEVJY/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recLQFgggJ45y2p4A",
+      "createdTime": "2026-09-17T07:41:17.000Z",
+      "uniqueId": "SWE-0036",
+      "name": "Uk - 0831",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1nrdD1TMh3QLdM4QT_1RdnlA3u17RYgkY/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recLbvdQDaJA6NMy1",
+      "createdTime": "2026-09-17T07:54:11.000Z",
+      "uniqueId": "SWE-0054",
+      "name": "Uk - 7884",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1IaU2NENDBwoSbRmNjwl6y3WIUXh0hOwG/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recLq78THG66p55vV",
+      "createdTime": "2026-09-16T12:18:14.000Z",
+      "uniqueId": "SWE-0004",
+      "name": "Roberto / Alex Weiss \u2014 Caregiver Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)",
+        "Care Givers (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2025-06-17",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.7qwpvtjvvkvq",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/63d1f3eb-2e59-4dd2-a988-56e52e30277f",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/file/d/1xYpsY4-jzaFN2l8T03jSdyEldmP_sHgv/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Person Combined Edit"
+    },
+    {
+      "id": "recMHWTYMG4yD2JLh",
+      "createdTime": "2026-09-18T14:41:02.000Z",
+      "uniqueId": "SWE-0092",
+      "name": "That was awesome!! Unidentified testimonee at Enhanced Games",
+      "primaryMarket": "Pro Sports",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "recordingDate": "2026-05-01"
+    },
+    {
+      "id": "recOSNptfxlOfpnRO",
+      "createdTime": "2026-09-17T07:41:18.000Z",
+      "uniqueId": "SWE-0037",
+      "name": "Uk - 0846",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1xpJBMeaV4k8H8DryMM5UJWofmB7BiQ2c/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recOp6Jo0n09QHFxb",
+      "createdTime": "2026-09-17T07:15:30.000Z",
+      "uniqueId": "SWE-0034",
+      "name": "Uk - 0329",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1pQC8vI-CCbP3Rb6p5lkhrAQl-GBO_2E_/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recPmwoJIod9bNGOU",
+      "createdTime": "2026-09-17T13:36:29.000Z",
+      "uniqueId": "SWE-0070",
+      "name": "Jennifer \u2014 Body Worker - Cognitive Clarity Testimonial",
+      "primaryMarket": "Clinics / Performance Centers",
+      "status": "Complete",
+      "priority": "Medium",
+      "videoTopic": [
+        "Cognitive Clarity - Post Demo Experience (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "kpiEstDeliveryDate": "2026-09-18",
+      "kpiActualDeliveryDate": "2026-09-18",
+      "recordingDate": "2026-06-26",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.e6tcnt5hek4d",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/cfe2894b-597d-49e4-a70c-0e34301c8cff",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/drive/folders/1b3jiryeqTJvAWCEbnvXKz2DyJx9Fmg6A?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit",
+      "finalApprovedVideoLink": "https://drive.google.com/file/d/1OAQuRwfHRB4wyVvPuOWZnk32UTG3VhB7/view?usp=drive_link",
+      "evidenceLibraryHandoff": "Ready for Intake"
+    },
+    {
+      "id": "recQyeb4pTPGC7ppq",
+      "createdTime": "2026-09-16T12:18:14.000Z",
+      "uniqueId": "SWE-0003",
+      "name": "Ann Zhang 1 \u2014 Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Complete",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "kpiEstDeliveryDate": "2026-09-18",
+      "kpiActualDeliveryDate": "2026-09-18",
+      "recordingDate": "2024-10-23",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.e1ohx7llzhdg",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/81961b5b-baee-4c13-990e-ff975fe3f953",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/file/d/1b1_ZE8pvRzYLFbWkOGmCh5M46eC-U5uF/view?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit",
+      "finalApprovedVideoLink": "https://drive.google.com/open?id=1AHAjREh-_QjlypqCS5OksEzH1HJcSuxy&usp=drive_fs",
+      "evidenceLibraryHandoff": "Ready for Intake"
+    },
+    {
+      "id": "recREsZqg3ZYaDRZv",
+      "createdTime": "2026-09-17T07:15:21.000Z",
+      "uniqueId": "SWE-0025",
+      "name": "Uk - 9013",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/9fb42f88-596b-4726-b5d4-8b5d500acc09",
+      "sourceFootage": "https://drive.google.com/file/d/1KU_XgJ43FiLFeIfgqYaKdgNPQ_DnBM-_/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recSEPS5bxTBXyQXl",
+      "createdTime": "2026-09-17T07:41:20.000Z",
+      "uniqueId": "SWE-0038",
+      "name": "Uk - 0856",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1CHfEGfprIIYUp57cX94OMKw_5qip1y0e/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recSpg20I7PzckoGj",
+      "createdTime": "2026-09-17T13:37:30.000Z",
+      "uniqueId": "SWE-0072",
+      "name": "Mike Sanders \u2014 Former NFL & Senior Testimonial",
+      "primaryMarket": "Pro Sports",
+      "status": "Reviewed - needs edits",
+      "priority": "Medium",
+      "videoTopic": [
+        "Senior + Former NFL  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-07-09",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.u1ys84k15nh7",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/fb1640f7-7dfa-404e-a488-7052904d0d76",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/drive/u/0/folders/15K0FlGtlrrqZg0E0i0lHVkH_jWKyP5eM",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recUVNtnRCkWXTWfo",
+      "createdTime": "2026-09-17T07:41:24.000Z",
+      "uniqueId": "SWE-0042",
+      "name": "Uk - 6775",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1pmipoXSD2cHHO7CO1YG2njA9ZtwXUeTH/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recUgMzXABLJQPLXJ",
+      "createdTime": "2026-09-16T13:10:02.000Z",
+      "uniqueId": "SWE-0017",
+      "name": "Uk - 0852",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/d03471fc-ffc0-453e-a242-4b9f5003147c",
+      "sourceFootage": "https://drive.google.com/file/d/1GvXFMW3MuwpO3d5gXAch_wHnNcr9sUPK/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recUh6hV1VwR6sLmD",
+      "createdTime": "2026-09-16T12:18:14.000Z",
+      "uniqueId": "SWE-0002",
+      "name": "Ann Zhang \u2014 Mandarin Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "On Hold",
+      "priority": "Low",
+      "videoTopic": [
+        "Seniors  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2024-10-23",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.xx6m4xamnfbz",
+      "sourceFootage": "https://drive.google.com/file/d/1aPIW4O9ciWP-w-tB7cIHAoHNvqpqypab/view?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Alternate Language Version",
+      "questionsNotes": "we will not use this testimonial"
+    },
+    {
+      "id": "recV2jFS89UW89N32",
+      "createdTime": "2026-09-17T07:41:25.000Z",
+      "uniqueId": "SWE-0043",
+      "name": "Uk - 6777",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1nkxp3mI1APWI6ZqzJLTHEWQsD6c_5l-N/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recWPQuWpBau7ZSrm",
+      "createdTime": "2026-09-17T07:47:57.000Z",
+      "uniqueId": "SWE-0051",
+      "name": "Uk - 7868",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/17-lUD6O45dDc0ivbsS6G0uMjK4KX98_9/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recWe8v2WFZLdZERl",
+      "createdTime": "2026-09-17T13:26:21.000Z",
+      "uniqueId": "SWE-0061",
+      "name": "Wendy Posillico \u2014 PGA Show",
+      "primaryMarket": "Golf",
+      "status": "On Hold",
+      "priority": "Low",
+      "videoTopic": [
+        "PGA Show 2025  (Gordon)"
+      ],
+      "recordingDate": "2025-01-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.x7m7rmggpmnv",
+      "sourceFootage": "https://drive.google.com/file/d/1JZqZkHlWNK3qdeqS8hQMApBnwMLtpgwa/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit",
+      "questionsNotes": "Tom\u2019s brief says the video is very hard to hear and does not provide a full edit plan."
+    },
+    {
+      "id": "recXJCzrNUVdAvicJ",
+      "createdTime": "2026-09-17T13:33:30.000Z",
+      "uniqueId": "SWE-0062",
+      "name": "4 Aces LIV Golf Tour \u2014 Social Media Guy Testimonial",
+      "primaryMarket": "Golf",
+      "status": "Complete",
+      "priority": "Medium",
+      "videoTopic": [
+        "4 Aces LIV Golf Tour - Social Media Lead  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "kpiEstDeliveryDate": "2026-09-18",
+      "kpiActualDeliveryDate": "2026-09-18",
+      "recordingDate": "2025-07-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.x7m7rmggpmnv",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/d1a125fd-26a1-4cc8-9516-5b5dec885020",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/drive/folders/1svU9kyGKPXvQqx5bDLcpLgr12ldq7QEF?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit + B-roll",
+      "finalApprovedVideoLink": "https://drive.google.com/open?id=1kdCTdVK0k3M_2EXfpD9rZTO7zwud8AyB&usp=drive_fs",
+      "evidenceLibraryHandoff": "Ready for Intake"
+    },
+    {
+      "id": "recXYjpiKTjd0B08g",
+      "createdTime": "2026-09-18T14:38:36.000Z",
+      "uniqueId": "SWE-0090",
+      "name": "Charles Pappas - Cameraman,documentarian Testimonial at Enhanced Game",
+      "primaryMarket": "At-Home",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "recordingDate": "2026-05-01",
+      "sourceFootage": "https://drive.google.com/file/d/1gSz33oLvUF4y5SDGYQj-GIdN6t-sgfQL/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recYVOTL9m8ggGypU",
+      "createdTime": "2026-09-18T14:39:37.000Z",
+      "uniqueId": "SWE-0091",
+      "name": "Jasmine Abrams - post-Relax testimonial at Enhanced Games",
+      "primaryMarket": "Pro Sports",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "recordingDate": "2026-05-01",
+      "sourceFootage": "https://drive.google.com/file/d/1aOqv9qkLkzD69L6h4NHjrifyMijnnxYW/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recYXNRguibJac5G9",
+      "createdTime": "2026-09-17T13:37:45.000Z",
+      "uniqueId": "SWE-0073",
+      "name": "Rachel Simon \u2014 Menopause Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Reviewed - needs edits",
+      "priority": "Medium",
+      "videoTopic": [
+        "51 menopause -  year old  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-06-29",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.388rm3pc02yu",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/0b88a881-b2eb-4ddd-8a52-514333b52704",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/drive/u/0/folders/1VX5GJOyjQzapB1jTI2ft3taBL9dye6kc",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit"
+    },
+    {
+      "id": "recYasWA991NtsOCj",
+      "createdTime": "2026-09-16T12:27:28.000Z",
+      "uniqueId": "SWE-0007",
+      "name": "Ken \u2014 Caregiver Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)",
+        "Care Givers (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-08-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.ge6pl2x4efoc",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/6c206177-0636-43c5-9a6b-49c53f5173ed",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/drive/folders/1wm05nDA9h20gPsLzIdUKH6Ikez7_RCQU?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit"
+    },
+    {
+      "id": "recZr8ZQzh5juywMx",
+      "createdTime": "2026-09-17T07:41:26.000Z",
+      "uniqueId": "SWE-0044",
+      "name": "Uk - 7413",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/10uMa7TWxjYV1_Y9uL78Ix_jUzo9eJeCI/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "reca16yMiRZL7TjUz",
+      "createdTime": "2026-09-18T14:22:09.000Z",
+      "uniqueId": "SWE-0086",
+      "name": "Oleksii-Serdiuchenko-Ukraine Athletics",
+      "primaryMarket": "Pro Sports",
+      "status": "Busy Briefing",
+      "priority": "Low",
+      "videoTopic": [
+        "Interview"
+      ],
+      "sourceFootage": "https://drive.google.com/file/d/1WMbD1zxUUD82ocYb_85EGVKFQJ_v0tVF/view?usp=sharing",
+      "requester": [
+        "Candice"
+      ],
+      "editType": "Single-Source Edit",
+      "questionsNotes": "found this in the general folder, cant find work on version"
+    },
+    {
+      "id": "recaXXs80NCKi7rK9",
+      "createdTime": "2026-09-16T12:44:02.000Z",
+      "uniqueId": "SWE-0011",
+      "name": "Uk - 7442",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/9a19c97e-f347-43e2-9810-93d42f9f068f",
+      "sourceFootage": "https://drive.google.com/open?id=13JG9KruAfSs-yqtZbIylBly4Yxa_ZaxP&usp=drive_fs",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recaaar1zVN3WpTSk",
+      "createdTime": "2026-09-17T07:47:52.000Z",
+      "uniqueId": "SWE-0047",
+      "name": "Uk - 7462",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1eYjUCJX2GD__w6uQII8ws3oUCvPn1vpY/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recaajZBWQPB2sBUO",
+      "createdTime": "2026-09-17T13:40:00.000Z",
+      "uniqueId": "SWE-0078",
+      "name": "Ukrainian Task Rabbit \u2014 Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Ukrainian Task Rabbit  (Gordon)"
+      ],
+      "recordingDate": "2026-08-18",
+      "sourceFootage": "https://drive.google.com/drive/folders/1udnZrbp8TY0emO144q5x72hNRvJ_9oEl?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recatUchliwW1WQse",
+      "createdTime": "2026-09-17T07:47:54.000Z",
+      "uniqueId": "SWE-0048",
+      "name": "Uk - 7475",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1RzZlM5A4HTLyAQFEDFX-a4jnmCFv_0GC/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recazM0kWJeL8DlDn",
+      "createdTime": "2026-09-17T07:15:26.000Z",
+      "uniqueId": "SWE-0029",
+      "name": "Uk - 7428",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/76ca865b-5c74-4f2c-a29a-e5936c04824e",
+      "sourceFootage": "https://drive.google.com/file/d/1pH_drLxqFePJffI-ZpeToExBAbUcbsfg/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recb8Ifc1qFi3FHZl",
+      "createdTime": "2026-09-17T13:39:41.000Z",
+      "uniqueId": "SWE-0077",
+      "name": "Masonry Testimonial \u2014 13 Aug 2026",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Masonry Testimonial  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-08-13",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.ptyx4y4vvd0a",
+      "sourceFootage": "https://drive.google.com/drive/folders/1bdnSQ_BWenXOn0a2TbqewcU_O1i9wDMx?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recbnMQB7Tg6HgDtH",
+      "createdTime": "2026-09-17T07:41:22.000Z",
+      "uniqueId": "SWE-0040",
+      "name": "Uk - 6529",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/175sC_TS7mcIiQx_9gWJIhb3tX0nwtKmk/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "reccl6XHlpIroPMyN",
+      "createdTime": "2026-09-16T12:59:44.000Z",
+      "uniqueId": "SWE-0016",
+      "name": "Uk - 7435",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/e287ef23-1820-4966-9971-82940c7c7925",
+      "sourceFootage": "https://drive.google.com/file/d/13XiD4NcFqEiY9d8vhKQ9uBJaHMoaynnJ/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recdNYqFuIeKWBjcn",
+      "createdTime": "2026-09-17T13:35:23.000Z",
+      "uniqueId": "SWE-0067",
+      "name": "Blake Miller \u2014 Landscaper Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2025-06-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.c066xbes4cqk",
+      "sourceFootage": "https://drive.google.com/file/d/1JU6hz6fDToKEk_1w1ggjfW3GsHIPQBPB/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recdvqb1qW1GOefU2",
+      "createdTime": "2026-09-16T12:18:14.000Z",
+      "uniqueId": "SWE-0001",
+      "name": "Anne Zhao \u2014 Shiftwave Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2024-09-22",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.90suuefgjlgs",
+      "sourceFootage": "https://drive.google.com/file/d/1OfdeLrs_-pYqN_WmHLR6A3cXB-kEtrZi/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "receLm5Vew99e0p5m",
+      "createdTime": "2026-09-17T07:47:57.000Z",
+      "uniqueId": "SWE-0052",
+      "name": "Uk - 7869",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1zGpJnQeSBgkBg-jGnqU1Z9sU4L-jz63L/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rech3cPuWRVkfbS6K",
+      "createdTime": "2026-09-17T13:35:22.000Z",
+      "uniqueId": "SWE-0066",
+      "name": "Alex Valov \u2014 Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-05-26",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.n0jj68i05oic",
+      "sourceFootage": "https://drive.google.com/file/d/13c-TxBkO_P_uvJoTyMWwZg2kRs0FO73P/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "rechJl5ZsEbB9UQ3x",
+      "createdTime": "2026-09-17T07:41:27.000Z",
+      "uniqueId": "SWE-0045",
+      "name": "Uk - 7416",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1_xbh82M7hxVnFTy3Ti7xuK4Mx97h8on5/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recjxK5Uf1IOvqhot",
+      "createdTime": "2026-09-17T13:26:18.000Z",
+      "uniqueId": "SWE-0059",
+      "name": "Steve Schaeffer (John Foster Asking Questions) \u2014 PGA Testimonial",
+      "primaryMarket": "Golf",
+      "status": "Reviewed - needs edits",
+      "priority": "Medium",
+      "videoTopic": [
+        "PGA Show 2025  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2025-01-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.iug5pixgvclp",
+      "reviewLink": "https://next.frame.io/share/b67f2bc4-ce8a-4d6e-ac6e-2bdcd7c97809/view/c454abff-9428-4499-bfd0-65f309f1c653",
+      "dateReviewLinkSent": "2026-08-31",
+      "sourceFootage": "https://drive.google.com/file/d/1zSBT-iONWCNHAmmhD-3ZrMPGqy6FqJp0/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit",
+      "questionsNotes": "original file name PGA Show_w John Foster Asking Golfer Questions.MOV"
+    },
+    {
+      "id": "recjyyCWwBEjjuIoR",
+      "createdTime": "2026-09-17T07:47:59.000Z",
+      "uniqueId": "SWE-0053",
+      "name": "Uk - 7877",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/14tNHyIoY5iIRAzjIKtEOCRKBlzbmkDk6/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "reckGwYHT8c7qE1Tc",
+      "createdTime": "2026-09-17T07:47:56.000Z",
+      "uniqueId": "SWE-0050",
+      "name": "Uk - 7864",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/17fCL_BAgPLOJdudtBbshSAqZFjy6wlTb/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "reckl1MxJYOJ0BhTU",
+      "createdTime": "2026-09-16T13:10:07.000Z",
+      "uniqueId": "SWE-0020",
+      "name": "Uk - 7447",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/19e973d9-d35d-4c74-9c8b-6066f632dd89",
+      "sourceFootage": "https://drive.google.com/file/d/1WsnH4LvtMB8Nma2leQR3VwFIjbyPFEl7/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "reckv6bidbmDCJiKt",
+      "createdTime": "2026-09-17T07:15:24.000Z",
+      "uniqueId": "SWE-0027",
+      "name": "Uk - 6557",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/15811988-5ea9-4934-bb39-9496efc63180",
+      "sourceFootage": "https://drive.google.com/file/d/1dKCiJwhc4JIEoNKEytZyYv5irxZjP0hY/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recliqEtZa8Gngnnk",
+      "createdTime": "2026-09-17T07:15:28.000Z",
+      "uniqueId": "SWE-0031",
+      "name": "First Time User - very present - Superconference 2024",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "Superconference 24 - Post Demo"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-04-01",
+      "description": "Superconference 2024, bad sounds quality",
+      "recordingDate": "2024-11-01",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/7451e307-3ac8-4997-b823-1745ad0ab085",
+      "sourceFootage": "https://drive.google.com/open?id=1yMUfHPmy8JgG3fN-aoeUVX0cK8oFbdWE&usp=drive_fs",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "reclqBnHha3Fnz32m",
+      "createdTime": "2026-09-17T13:34:43.000Z",
+      "uniqueId": "SWE-0064",
+      "name": "Gabriel Mecklenburg - Founder Public Company ( Corporate)",
+      "primaryMarket": "Corporate",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Founder Public Company - Corporate  (Gordon)"
+      ],
+      "recordingDate": "2025-08-01",
+      "sourceFootage": "https://drive.google.com/file/d/1xkZCr7d69x4-tRSw2AAo5r60HJctuF6_/view?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recp1W8VcDInPxdWH",
+      "createdTime": "2026-09-16T12:34:26.000Z",
+      "uniqueId": "SWE-0010",
+      "name": "Uk - 7453",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/c2c1f56a-0c63-4c77-9672-9e6fab7b4ffc",
+      "sourceFootage": "https://drive.google.com/open?id=1-RjomaJqZVidXOkvagCUldVfptWSzOiC&usp=drive_fs",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recs9ealdas0MeDpR",
+      "createdTime": "2026-09-17T07:15:29.000Z",
+      "uniqueId": "SWE-0032",
+      "name": "Uk - 0183",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1DkrOEv2PDor3U0GnEzgL8WCJ5A_HU5In/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "rect9esgticYvEQR1",
+      "createdTime": "2026-09-17T13:26:20.000Z",
+      "uniqueId": "SWE-0060",
+      "name": "PGA Former Golfer \u2014 Short Testimonial",
+      "primaryMarket": "Golf",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "PGA Show 2025  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2025-01-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.t1vca1g8y3st",
+      "sourceFootage": "https://drive.google.com/file/d/1LQoOtOfyAavpP7E-1dtDGq5Z2j2FNmlK/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recti1vOdsdae2SxM",
+      "createdTime": "2026-09-18T14:20:36.000Z",
+      "uniqueId": "SWE-0085",
+      "name": "Diego-Oakley Brand Activation-After",
+      "primaryMarket": "Corporate",
+      "status": "Busy Briefing",
+      "priority": "Low",
+      "videoTopic": [
+        "Post Demo Experience (Gordon)"
+      ],
+      "sourceFootage": "https://drive.google.com/file/d/1BvBbwaJIVPj7bp-PwHZR_ImCDuD6SWI7/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ],
+      "editType": "Single-Source Edit",
+      "questionsNotes": "Just found this video in the folder, if not worthwhile we put in red folder"
+    },
+    {
+      "id": "rectitLu6h7xhmpXj",
+      "createdTime": "2026-09-16T12:27:36.000Z",
+      "uniqueId": "SWE-0009",
+      "name": "James - Senior",
+      "primaryMarket": "At-Home",
+      "status": "Busy Briefing",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)"
+      ],
+      "recordingDate": "2026-08-21",
+      "sourceFootage": "https://drive.google.com/file/d/1D_KRbki6mqvcpJIerXytyJoViMeJuUvF/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recu8hMOlXMVP2o45",
+      "createdTime": "2026-09-17T07:15:25.000Z",
+      "uniqueId": "SWE-0028",
+      "name": "Uk - 0901",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/da5fdf04-396f-44d1-b32f-d771afedcbba",
+      "sourceFootage": "https://drive.google.com/file/d/1guVNlG48u8yARojLqxq4W4ZaqC8ew4l5/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recuBCoAUcnis8quv",
+      "createdTime": "2026-09-16T13:10:08.000Z",
+      "uniqueId": "SWE-0021",
+      "name": "Uk - 8235",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/ca737ee5-5136-4db6-9a37-9f82675e6ab3",
+      "sourceFootage": "https://drive.google.com/file/d/1FfoOtqXVOH14fpIrvltnd0VjXEC38EsY/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recuY7B0sTSZg3r8O",
+      "createdTime": "2026-09-16T12:27:24.000Z",
+      "uniqueId": "SWE-0006",
+      "name": "Bonnie Weiss \u2014 Senior 83 Testimonial",
+      "primaryMarket": "At-Home",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "Seniors  (Gordon)"
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2025-01-01",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.o9jesnz7f7z7",
+      "sourceFootage": "https://drive.google.com/file/d/1XBuBQ9elfjorcnQHPjgEqaTE9CTgAr-L/view?usp=sharing",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Single-Source Edit"
+    },
+    {
+      "id": "recw9A4CRtm3HpqcL",
+      "createdTime": "2026-09-17T07:41:23.000Z",
+      "uniqueId": "SWE-0041",
+      "name": "Uk - 6578",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1Y-LT2cdR9hXXC1iHWDO_IhQ352_3a5y2/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recxu2D0rLCun2arF",
+      "createdTime": "2026-09-16T12:55:49.000Z",
+      "uniqueId": "SWE-0012",
+      "name": "Uk - 7439",
+      "primaryMarket": "At-Home",
+      "status": "Ready for Review",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "reviewLink": "https://next.frame.io/share/f489c4cf-2d69-40df-98f8-cd100a546141/view/ae97b9d0-67d4-4000-8490-81e5336c9195",
+      "sourceFootage": "https://drive.google.com/open?id=1fnLrrXGTW8Tq12xJzF0nMAuX0nenHuZK&usp=drive_fs",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "recyiVG3SjilrTceF",
+      "createdTime": "2026-09-17T07:54:16.000Z",
+      "uniqueId": "SWE-0057",
+      "name": "Uk - 7906",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1aokHOCslJDI2mINs-TfyUCbcQwPxF84s/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    },
+    {
+      "id": "reczO8UBgvVbZt1yz",
+      "createdTime": "2026-09-17T13:39:24.000Z",
+      "uniqueId": "SWE-0076",
+      "name": "Nina - Wife of Frank - First Responder",
+      "primaryMarket": "First Responders",
+      "status": "Editing In Progress",
+      "priority": "Medium",
+      "videoTopic": [
+        "First Responder/EMT + Wife + Wedding Testimonial - First responder + Wife- Nina and Frank  (Gordon) "
+      ],
+      "kpiStartDate": "2026-08-18",
+      "recordingDate": "2026-08-08",
+      "linkToBrief": "https://docs.google.com/document/d/1_TJTkXWoQGuPnuk97AORuO3H5eHXC7w1lsu-PHyCuZE/edit?tab=t.0#heading=h.na508uir5h8k",
+      "sourceFootage": "https://drive.google.com/drive/folders/1dToRgymBDRGlNxm43uKaP8jkq8KfF1XR?usp=drive_link",
+      "requester": [
+        "Gordon"
+      ],
+      "editType": "Multi-Source Edit",
+      "questionsNotes": "Please note that I gave the link to both the husband's and the wife's testimonial because you might want to use the B-roll file in both videos. "
+    },
+    {
+      "id": "reczWvWduEUKwHn6p",
+      "createdTime": "2026-09-17T07:54:12.000Z",
+      "uniqueId": "SWE-0055",
+      "name": "Uk - 7886",
+      "primaryMarket": "At-Home",
+      "status": "Editing Not Started ( already Briefed)",
+      "priority": "Low",
+      "videoTopic": [
+        "UK Testimonials"
+      ],
+      "requestorsDeadline": "2026-09-21",
+      "kpiStartDate": "2026-01-14",
+      "description": "68 testimonial videos from our UK ambassadors Clive and Fluff",
+      "recordingDate": "2025-12-18",
+      "sourceFootage": "https://drive.google.com/file/d/1GkW2iPZCfH25EZUxtAxV24dvmyzjReAT/view?usp=drive_link",
+      "requester": [
+        "Candice"
+      ]
+    }
+  ]
+}

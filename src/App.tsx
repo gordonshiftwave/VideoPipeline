@@ -1,7 +1,7 @@
 import { BulkDialog } from "@/components/BulkDialog"
 import { FilterBar } from "@/components/FilterBar"
 import { ProjectDetail } from "@/components/ProjectDetail"
-import { ProjectRow } from "@/components/ProjectRow"
+import { BoardHead, ProjectRow } from "@/components/ProjectRow"
 import { SearchBar } from "@/components/SearchBar"
 import { WaveMark } from "@/components/WaveMark"
 import { demoCatalog } from "@/lib/demo-catalog"
@@ -9,7 +9,7 @@ import {
   applyOverride,
   countBy,
   deadlineKind,
-  EMPTY_FILTERS,
+  BOARD_FILTERS,
   filtersAreActive,
   interpretQuery,
   overrideKeys,
@@ -20,36 +20,30 @@ import {
   clearOverrides,
   getLocalStore,
   getServerStore,
+  saveCredibility,
   savePlatform,
   saveUpdates,
   subscribeLocalStore,
 } from "@/lib/storage"
-import { TABLE_URL } from "@/lib/taxonomy"
-import type { Catalog, Density, ExplicitFilters, FieldPatch, SortKey } from "@/lib/types"
+import { PLATFORMS, TABLE_URL } from "@/lib/taxonomy"
+import type { Catalog, Credibility, Density, ExplicitFilters, FieldPatch, PlatformId, SortKey } from "@/lib/types"
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react"
-
-const QUICK = [
-  { id: "seniors", label: "Seniors", query: "seniors" },
-  { id: "pro-sports", label: "Pro Sports", query: "pro sports" },
-  { id: "editing", label: "Editing in progress", query: "editing in progress" },
-  { id: "overdue", label: "Overdue", query: "overdue" },
-  { id: "today", label: "Due today", query: "due today" },
-  { id: "complete", label: "Complete", query: "complete" },
-  { id: "missing", label: "Missing deadline", query: "missing deadline" },
-] as const
 
 const SORTS: { value: SortKey; label: string }[] = [
   { value: "urgency", label: "Urgency" },
   { value: "deadline", label: "Deadline" },
+  { value: "recency", label: "Recency" },
+  { value: "priority", label: "Priority" },
+  { value: "credibility", label: "Credibility" },
   { value: "status", label: "Status" },
-  { value: "name", label: "Name" },
   { value: "market", label: "Market" },
+  { value: "name", label: "Name" },
 ]
 
 export function App() {
   const store = useSyncExternalStore(subscribeLocalStore, getLocalStore, getServerStore)
   const [catalog, setCatalog] = useState<Catalog>(() => demoCatalog())
-  const [filters, setFilters] = useState<ExplicitFilters>(EMPTY_FILTERS)
+  const [filters, setFilters] = useState<ExplicitFilters>(BOARD_FILTERS)
   const [sort, setSort] = useState<SortKey>("urgency")
   const [density, setDensity] = useState<Density>("cards")
   const [selected, setSelected] = useState<string[]>([])
@@ -65,8 +59,13 @@ export function App() {
   const [today, setToday] = useState(() => todayISO())
 
   const projects = useMemo(
-    () => catalog.projects.map((project) => applyOverride(project, store.overrides[project.id])),
-    [catalog.projects, store.overrides],
+    () =>
+      catalog.projects.map((project) => ({
+        ...applyOverride(project, store.overrides[project.id]),
+        credibility: store.credibility[project.id] ?? null,
+        platforms: store.platforms[project.id] ?? {},
+      })),
+    [catalog.projects, store.overrides, store.credibility, store.platforms],
   )
   const visible = useMemo(
     () => searchProjects(projects, filters, sort, today),
@@ -81,19 +80,32 @@ export function App() {
     filters.statuses.length +
     filters.markets.length +
     filters.priorities.length +
+    (filters.credibility.length ? 1 : 0) +
     (filters.deadline !== "any" ? 1 : 0) +
-    (filters.videoLink !== "any" ? 1 : 0)
+    (filters.videoLink !== "any" ? 1 : 0) +
+    (filters.posted !== "any" ? 1 : 0) +
+    (filters.missingPlatform ? 1 : 0) +
+    (filters.pipeline !== "active" ? 1 : 0)
   const localEditCount = Object.keys(store.overrides).length
   const dueToday = projects.filter((project) => deadlineKind(project, today) === "today").length
   const overdue = projects.filter((project) => deadlineKind(project, today) === "overdue").length
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const next = { ...EMPTY_FILTERS }
+    const next = { ...BOARD_FILTERS }
     next.query = params.get("q") ?? ""
     next.statuses = params.getAll("status")
     next.markets = params.getAll("market")
     next.priorities = params.getAll("priority")
+    next.credibility = params.getAll("credibility").filter((value): value is Credibility =>
+      value === "High" || value === "Medium" || value === "Low",
+    )
+    const pipeline = params.get("pipeline")
+    if (pipeline === "active" || pipeline === "live" || pipeline === "all") next.pipeline = pipeline
+    const posted = params.get("posted")
+    if (posted === "any" || posted === "posted" || posted === "not-posted") next.posted = posted
+    const platform = params.get("platform")
+    if (PLATFORMS.some((item) => item.id === platform)) next.missingPlatform = platform as PlatformId
     const deadline = params.get("deadline")
     if (deadline === "has" || deadline === "missing" || deadline === "overdue" || deadline === "today") {
       next.deadline = deadline
@@ -106,7 +118,16 @@ export function App() {
     if (params.get("view") === "list" || params.get("view") === "cards") {
       setDensity(params.get("view") as Density)
     }
-    if (next.statuses.length || next.markets.length || next.priorities.length || next.deadline !== "any" || next.videoLink !== "any") {
+    if (
+      next.statuses.length ||
+      next.markets.length ||
+      next.priorities.length ||
+      next.credibility.length ||
+      next.deadline !== "any" ||
+      next.videoLink !== "any" ||
+      next.posted !== "any" ||
+      next.missingPlatform
+    ) {
       setFiltersOpen(true)
     }
     const projectParam = params.get("project")
@@ -137,8 +158,12 @@ export function App() {
     filters.statuses.forEach((status) => params.append("status", status))
     filters.markets.forEach((market) => params.append("market", market))
     filters.priorities.forEach((priority) => params.append("priority", priority))
+    filters.credibility.forEach((rating) => params.append("credibility", rating))
     if (filters.deadline !== "any") params.set("deadline", filters.deadline)
     if (filters.videoLink !== "any") params.set("link", filters.videoLink)
+    if (filters.posted !== "any") params.set("posted", filters.posted)
+    if (filters.missingPlatform) params.set("platform", filters.missingPlatform)
+    if (filters.pipeline !== "active") params.set("pipeline", filters.pipeline)
     if (sort !== "urgency") params.set("sort", sort)
     if (density !== "cards") params.set("view", density)
     if (activeId) {
@@ -273,12 +298,16 @@ export function App() {
   }
 
   const reading = [
+    interpreted.pipeline === "live" ? "already live" : interpreted.pipeline === "active" ? "in pipeline" : null,
+    interpreted.posted === "not-posted" ? "not posted" : interpreted.posted === "posted" ? "posted" : null,
+    interpreted.missingPlatform ? `missing ${interpreted.missingPlatform}` : null,
     interpreted.deadline,
     ...interpreted.statuses,
     ...interpreted.markets,
     interpreted.videoLink === "has" ? "has video link" : null,
     interpreted.videoLink === "missing" ? "missing video link" : null,
   ].filter(Boolean)
+  const liveCount = projects.filter((project) => project.status === "Complete").length
 
   return (
     <div className="min-h-screen bg-paper text-ink">
@@ -351,20 +380,66 @@ export function App() {
             onQueryChange={(query) => setFilters((current) => ({ ...current, query }))}
           />
           <div className="flex gap-1.5 overflow-x-auto pb-0.5">
-            {QUICK.map((chip) => {
-              const pressed = filters.query.toLowerCase().includes(chip.query)
-              return (
-                <button
-                  key={chip.id}
-                  type="button"
-                  className="radius-chip focus-ring shrink-0"
-                  aria-pressed={pressed}
-                  onClick={() => toggleQuick(chip.query)}
-                >
-                  {chip.label}
-                </button>
-              )
-            })}
+            <FilterChip
+              label="In pipeline"
+              pressed={filters.pipeline === "active"}
+              onClick={() => setFilters((current) => ({ ...current, pipeline: current.pipeline === "active" ? "all" : "active" }))}
+            />
+            <FilterChip
+              label="Already live"
+              pressed={filters.pipeline === "live"}
+              onClick={() => setFilters((current) => ({ ...current, pipeline: current.pipeline === "live" ? "active" : "live" }))}
+            />
+            <FilterChip
+              label="Not posted"
+              pressed={filters.posted === "not-posted"}
+              onClick={() =>
+                setFilters((current) => ({
+                  ...current,
+                  posted: current.posted === "not-posted" ? "any" : "not-posted",
+                }))
+              }
+            />
+            <FilterChip
+              label="Missing link"
+              pressed={filters.videoLink === "missing"}
+              onClick={() =>
+                setFilters((current) => ({
+                  ...current,
+                  videoLink: current.videoLink === "missing" ? "any" : "missing",
+                }))
+              }
+            />
+            <FilterChip
+              label="Overdue"
+              pressed={filters.deadline === "overdue" || filters.query.toLowerCase().includes("overdue")}
+              onClick={() =>
+                setFilters((current) => ({
+                  ...current,
+                  deadline: current.deadline === "overdue" ? "any" : "overdue",
+                }))
+              }
+            />
+            <FilterChip
+              label="Missing Instagram"
+              pressed={filters.missingPlatform === "instagram"}
+              onClick={() =>
+                setFilters((current) => ({
+                  ...current,
+                  missingPlatform: current.missingPlatform === "instagram" ? "" : "instagram",
+                }))
+              }
+            />
+            <FilterChip
+              label="Seniors"
+              pressed={filters.query.toLowerCase().includes("seniors")}
+              onClick={() => toggleQuick("seniors")}
+            />
+            <FilterChip
+              label="Pro Sports"
+              pressed={filters.query.toLowerCase().includes("pro sports")}
+              onClick={() => toggleQuick("pro sports")}
+            />
           </div>
           {reading.length ? (
             <p className="text-[0.82rem] text-ink-faint">
@@ -421,7 +496,7 @@ export function App() {
                   <button
                     type="button"
                     className="text-link focus-ring text-sm"
-                    onClick={() => setFilters(EMPTY_FILTERS)}
+                    onClick={() => setFilters(BOARD_FILTERS)}
                   >
                     Clear filters
                   </button>
@@ -441,7 +516,7 @@ export function App() {
 
       <main
         id="results"
-        className="reveal mx-auto grid max-w-[1100px] gap-5 px-4 py-5 sm:px-6 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] md:items-start md:gap-7"
+        className="reveal mx-auto max-w-[1100px] px-4 py-5 sm:px-6"
       >
         <section className="min-w-0">
           <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
@@ -450,8 +525,15 @@ export function App() {
                 {visible.length} of {projects.length}
               </h2>
               <p className="text-sm text-ink-faint">
+                {filters.pipeline === "live"
+                  ? "Already live"
+                  : filters.pipeline === "all"
+                    ? "All projects, including already live"
+                    : "In pipeline"}
+                {" · "}
                 {dueToday} due today
                 {overdue ? ` · ${overdue} overdue` : ""}
+                {filters.pipeline !== "live" ? ` · ${liveCount} already live` : ""}
                 <span className="hidden sm:inline"> · / search · j k move · enter open · x select</span>
               </p>
             </div>
@@ -478,57 +560,67 @@ export function App() {
               query={filters.query}
               overdueEmpty={filters.query.toLowerCase().includes("overdue") && overdue === 0}
               dueToday={dueToday}
-              onClear={() => setFilters(EMPTY_FILTERS)}
-              onDueToday={() => setFilters({ ...EMPTY_FILTERS, query: "due today" })}
+              onClear={() => setFilters(BOARD_FILTERS)}
+              onDueToday={() => setFilters({ ...BOARD_FILTERS, deadline: "today" })}
             />
           ) : (
-            <ul className="place-list place-panel">
-              {visible.map((project, index) => (
-                <li key={project.id}>
-                  <ProjectRow
-                    project={project}
-                    today={today}
-                    index={index}
-                    density={density}
-                    selected={selected.includes(project.id)}
-                    active={project.id === activeId}
-                    cursor={index === cursor}
-                    edited={overrideKeys(store.overrides[project.id]).length > 0}
-                    onOpen={() => {
-                      setCursor(index)
-                      setActiveId(project.id)
-                    }}
-                    onToggle={(shiftKey) => toggleOne(project.id, index, shiftKey)}
-                  />
-                </li>
-              ))}
-            </ul>
+            <div className="place-panel">
+              <BoardHead />
+              <ul className="place-list">
+                {visible.map((project, index) => (
+                  <li key={project.id}>
+                    <ProjectRow
+                      project={project}
+                      today={today}
+                      index={index}
+                      density={density}
+                      platforms={project.platforms}
+                      credibility={project.credibility}
+                      selected={selected.includes(project.id)}
+                      active={project.id === activeId}
+                      cursor={index === cursor}
+                      edited={overrideKeys(store.overrides[project.id]).length > 0}
+                      onOpen={() => {
+                        setCursor(index)
+                        setActiveId(project.id)
+                      }}
+                      onToggle={(shiftKey) => toggleOne(project.id, index, shiftKey)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </section>
 
-        <aside className={active ? "max-md:fixed max-md:inset-0 max-md:z-40 max-md:overflow-y-auto max-md:bg-paper" : "hidden md:block"}>
-          <div className="place-panel md:sticky md:top-28 md:max-h-[calc(100dvh-8rem)] md:overflow-y-auto">
-            {active ? (
-              <ProjectDetail
-                project={active}
-                today={today}
-                platforms={store.platforms[active.id] ?? {}}
-                edited={overrideKeys(store.overrides[active.id]).length > 0}
-                onClose={() => setActiveId(null)}
-                onPatch={(patch) => void persist([active.id], patch)}
-                onPlatform={(platformId, entry) => savePlatform(active.id, platformId, entry)}
-              />
-            ) : (
-              <div className="px-5 py-8">
-                <WaveMark className="h-8 w-[5.75rem] text-cta" />
-                <p className="mt-4 text-sm leading-relaxed text-ink-soft">
-                  Select a project to set the requester deadline and open footage, the Frame.io review, and the brief.
-                </p>
-              </div>
-            )}
+      </main>
+
+      {active ? (
+        <aside className="fixed inset-0 z-40 md:inset-y-0 md:left-auto md:w-[28rem]">
+          <button
+            type="button"
+            className="absolute inset-0 bg-[rgb(60_59_59/0.28)] md:hidden"
+            aria-label="Close project"
+            onClick={() => setActiveId(null)}
+          />
+          <div className="place-panel absolute inset-y-0 right-0 w-full overflow-y-auto bg-cream md:w-[28rem] md:shadow-[0_8px_28px_rgb(60_59_59/0.12)]">
+            <ProjectDetail
+              project={active}
+              today={today}
+              platforms={store.platforms[active.id] ?? {}}
+              credibility={store.credibility[active.id] ?? null}
+              edited={overrideKeys(store.overrides[active.id]).length > 0}
+              onClose={() => setActiveId(null)}
+              onPatch={(patch) => void persist([active.id], patch)}
+              onPlatform={(platformId, entry) => savePlatform(active.id, platformId, entry)}
+              onCredibility={(rating) => {
+                saveCredibility(active.id, rating)
+                setNotice(rating ? "Saved credibility on this device." : "Cleared credibility on this device.")
+              }}
+            />
           </div>
         </aside>
-      </main>
+      ) : null}
 
       <footer className="border-t border-line">
         <div className="mx-auto flex max-w-[1100px] flex-col gap-2 px-4 py-8 text-sm text-ink-faint sm:flex-row sm:items-center sm:justify-between sm:px-6">
@@ -571,8 +663,12 @@ export function App() {
         open={bulkOpen}
         count={selected.length}
         onClose={() => setBulkOpen(false)}
-        onApply={(patch) => {
-          void persist(selected, patch)
+        onApply={(patch, credibility) => {
+          if (credibility !== undefined) {
+            for (const id of selected) saveCredibility(id, credibility)
+          }
+          if (Object.keys(patch).length > 0) void persist(selected, patch)
+          else if (credibility !== undefined) setNotice("Saved credibility on this device.")
         }}
       />
 
@@ -590,6 +686,22 @@ export function App() {
         </div>
       ) : null}
     </div>
+  )
+}
+
+function FilterChip({
+  label,
+  pressed,
+  onClick,
+}: {
+  label: string
+  pressed: boolean
+  onClick: () => void
+}) {
+  return (
+    <button type="button" className="radius-chip focus-ring shrink-0" aria-pressed={pressed} onClick={onClick}>
+      {label}
+    </button>
   )
 }
 

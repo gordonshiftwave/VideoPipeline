@@ -68,9 +68,14 @@ export type ProjectUpdate = FieldPatch & { id: string }
 
 export type FieldOverride = FieldPatch
 
+export const CREDIBILITY = ["High", "Medium", "Low"] as const
+export type Credibility = (typeof CREDIBILITY)[number]
+
 export type PlatformEntry = {
   completedOn: string | null
   url: string | null
+  /** This platform uses its own cut of the source. Local until Airtable has the column. */
+  cut?: boolean | null
 }
 
 export type PlatformMap = Partial<Record<PlatformId, PlatformEntry>>
@@ -79,11 +84,16 @@ export type LocalStore = {
   version: 1
   overrides: Record<string, FieldOverride>
   platforms: Record<string, PlatformMap>
+  /** Planned Airtable field: Credibility. Not on the Projects table yet. */
+  credibility: Record<string, Credibility>
 }
 
 export type DeadlineFilter = "any" | "has" | "missing" | "overdue" | "today"
 export type VideoLinkFilter = "any" | "has" | "missing"
-export type SortKey = "urgency" | "deadline" | "name" | "status" | "market"
+export type PostedFilter = "any" | "posted" | "not-posted"
+/** active = still in the edit pipeline. live = Complete. all = both. */
+export type PipelineView = "active" | "live" | "all"
+export type SortKey = "urgency" | "deadline" | "recency" | "priority" | "credibility" | "name" | "status" | "market"
 export type Density = "cards" | "list"
 
 export type ExplicitFilters = {
@@ -91,8 +101,19 @@ export type ExplicitFilters = {
   statuses: string[]
   markets: string[]
   priorities: string[]
+  credibility: string[]
   deadline: DeadlineFilter
   videoLink: VideoLinkFilter
+  posted: PostedFilter
+  /** Hide a project that has no completion date or URL on this platform. */
+  missingPlatform: PlatformId | ""
+  pipeline: PipelineView
+}
+
+/** A project plus device-only fields used for sort and filter. */
+export type BoardProject = Project & {
+  credibility: Credibility | null
+  platforms: PlatformMap
 }
 
 export type Catalog = {

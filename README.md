@@ -50,20 +50,25 @@ If the token is set but Airtable cannot be read, the app falls back to the snaps
 
 ## What you can do
 
-- Search `Julianne`, `SWE-0069`, `Pro Sports`, or a topic such as `seniors`. The box also understands phrases: `editing in progress`, `overdue`, `due today`, `missing deadline`, `complete`, `ready for review`.
+- The board opens on work still in the pipeline. **Already live** (Airtable status Complete) stays one chip away and is not removed. Each row shows market, name and description, recording or added date, posted or not, video links, completion deadline, and the cut stage.
+- Cut stages are display names for the existing Status field: Raw (Busy Briefing, Editing Not Started), Rough cut (Editing In Progress), First pass (Ready for Review), Second pass (Reviewed - needs edits), Finals in the can (Reviewed - Approved, Complete). Saving a status still writes the Airtable string.
+- Search `Julianne`, `caretaker`, a person, a market, or `SWE-0069`. Phrases include `rough cut`, `first pass`, `overdue`, `not posted`, `missing instagram`, and `already live`.
+- Filter not posted, not complete, market, status, overdue, and missing link. Missing Instagram, TikTok, YouTube, and the other platforms are in Filters.
+- Credibility (High / Med / Low) is optional and stored in this browser, shaped for a future `Credibility` column. Priority remains the Airtable field. Sort by deadline, recency, priority, credibility, or market.
+- One source can have several platform cuts. Edit type and notes stay on the project. Each platform can be marked as its own cut, with a completion date and URL, until those columns exist.
 - Filter by status, market, priority, deadline, and whether a review or final video link exists. Filters stay in the sticky header. On a phone they open from the Filters chip.
 - Switch between comfortable and compact rows. `/` focuses search, `j` / `k` move through the list, Enter opens the highlighted project when focus is on the page, `x` selects it, Esc closes the detail.
 - Open a project for every date, the status select, notes, and clickable brief, Frame.io review, source footage, final video, and evidence-library links.
-- Select several projects and set one requester deadline or status for all of them.
-- Record a completion date and URL per platform (TikTok, YouTube, Instagram, Facebook, LinkedIn, X, Threads, Reddit, Pinterest). Pinterest is listed last and de-emphasized. These values stay on this device. They are shaped to map later to columns named like `TikTok Completed On` and `TikTok URL`. Those columns are not on the Projects table, and the app does not invent them.
+- Select several projects and set one completion deadline, status, or credibility for all of them.
+- Record a completion date, URL, and platform-specific cut per platform (TikTok, YouTube, Instagram, Facebook, LinkedIn, X, Threads, Reddit, Pinterest). Pinterest is listed last. These values stay on this device. They are shaped to map later to columns named like `TikTok Completed On`, `TikTok URL`, and `TikTok Cut`. Those columns are not on the Projects table, and the app does not invent them.
 
 ## Screens
 
-**Queue.** Paper background, the Shiftwave wave, a compact search pill with a black Search button, and shortcut chips (Seniors, Pro Sports, Editing in progress, Overdue, Due today, Complete, Missing deadline). Rows show the name, SWE id, market, requester, a small status dot, and the requester deadline. Footage, review, and brief sit on the comfortable row and open in a new tab.
+**Queue.** Paper background, the Shiftwave wave, a search pill, and chips for In pipeline, Already live, Not posted, Missing link, Overdue, Missing Instagram, Seniors, and Pro Sports. Rows are one line: market, project, recorded date, posted, links, deadline, cut stage.
 
-**Filters.** A panel under the sticky search with multi-select status and market, priority chips, deadline choices, and a video-link choice. The result line reads like “22 of 92”.
+**Filters.** Status options use the cut names next to the Airtable values. Market, priority, credibility, posted, missing platform, deadline, and video link sit under the sticky search.
 
-**Project.** The right-hand panel (full screen on a phone, with Back) holds date pickers for the requester deadline and both KPI delivery dates, a status menu, the read-only dates, and the link list. Platform completion sits under the notes, with a note that it is local until Airtable has the fields.
+**Project.** The side panel (full screen on a phone, with Back) sets the completion deadline, the Airtable status under its cut name, credibility, links, edit type, notes, and per-platform cuts.
 
 **Read-only banner.** When no write token is configured, a line above the search says edits stay in this browser. “Clear N local edits” throws those overrides away. With a token, the same line says changes sync to Airtable, and a notice confirms each save.
 

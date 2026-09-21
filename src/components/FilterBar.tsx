@@ -1,4 +1,5 @@
-import { PRIORITIES, STATUSES, type ExplicitFilters } from "@/lib/types"
+import { PLATFORMS, statusOptionLabel } from "@/lib/taxonomy"
+import { CREDIBILITY, PRIORITIES, STATUSES, type ExplicitFilters } from "@/lib/types"
 
 export function FilterBar({
   filters,
@@ -28,7 +29,7 @@ export function FilterBar({
         title="Status"
         options={statuses.map((status) => ({
           value: status,
-          label: status,
+          label: statusOptionLabel(status),
           count: statusCounts.get(status) ?? 0,
         }))}
         selected={filters.statuses}
@@ -60,6 +61,20 @@ export function FilterBar({
             </button>
           ))}
         </div>
+        <p className="mt-3 mb-1 text-[0.78rem] font-semibold text-ink">Credibility</p>
+        <div className="flex flex-wrap gap-1.5">
+          {CREDIBILITY.map((rating) => (
+            <button
+              key={rating}
+              type="button"
+              className="radius-chip focus-ring"
+              aria-pressed={filters.credibility.includes(rating)}
+              onClick={() => onChange({ ...filters, credibility: toggle(filters.credibility, rating) })}
+            >
+              {rating === "Medium" ? "Med" : rating}
+            </button>
+          ))}
+        </div>
         <p className="mt-3 mb-1 text-[0.78rem] font-semibold text-ink">Video link</p>
         <div className="flex flex-wrap gap-1.5">
           {(
@@ -82,7 +97,54 @@ export function FilterBar({
         </div>
       </div>
       <div>
-        <p className="mb-1 text-[0.78rem] font-semibold text-ink">Deadline</p>
+        <p className="mb-1 text-[0.78rem] font-semibold text-ink">Posted</p>
+        <div className="flex flex-wrap gap-1.5">
+          {(
+            [
+              ["any", "Any"],
+              ["posted", "Posted"],
+              ["not-posted", "Not posted"],
+            ] as const
+          ).map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              className="radius-chip focus-ring"
+              aria-pressed={filters.posted === value}
+              onClick={() => onChange({ ...filters, posted: value })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <p className="mt-3 mb-1 text-[0.78rem] font-semibold text-ink">Missing on</p>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            type="button"
+            className="radius-chip focus-ring"
+            aria-pressed={filters.missingPlatform === ""}
+            onClick={() => onChange({ ...filters, missingPlatform: "" })}
+          >
+            Any
+          </button>
+          {PLATFORMS.map((platform) => (
+            <button
+              key={platform.id}
+              type="button"
+              className="radius-chip focus-ring"
+              aria-pressed={filters.missingPlatform === platform.id}
+              onClick={() =>
+                onChange({
+                  ...filters,
+                  missingPlatform: filters.missingPlatform === platform.id ? "" : platform.id,
+                })
+              }
+            >
+              {platform.label}
+            </button>
+          ))}
+        </div>
+        <p className="mt-3 mb-1 text-[0.78rem] font-semibold text-ink">Deadline</p>
         <div className="flex flex-wrap gap-1.5">
           {(
             [

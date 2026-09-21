@@ -1,8 +1,9 @@
-import type { FieldOverride, LocalStore, PlatformEntry, PlatformId, ProjectUpdate } from "@/lib/types"
+import type { Credibility, FieldOverride, LocalStore, PlatformEntry, PlatformId, ProjectUpdate } from "@/lib/types"
+import { CREDIBILITY } from "@/lib/types"
 
 export const STORE_KEY = "shiftwave-video-pipeline-v1"
 
-const EMPTY: LocalStore = { version: 1, overrides: {}, platforms: {} }
+const EMPTY: LocalStore = { version: 1, overrides: {}, platforms: {}, credibility: {} }
 
 let snapshot: LocalStore = EMPTY
 let rawCache = ""
@@ -26,6 +27,7 @@ function read(): LocalStore {
       version: 1,
       overrides: parsed.overrides && typeof parsed.overrides === "object" ? parsed.overrides : {},
       platforms: parsed.platforms && typeof parsed.platforms === "object" ? parsed.platforms : {},
+      credibility: sanitizeCredibility(parsed.credibility),
     }
   } catch {
     snapshot = EMPTY
@@ -81,6 +83,23 @@ export function saveUpdates(updates: ProjectUpdate[]) {
 export function clearOverrides() {
   const current = read()
   write({ ...current, overrides: {} })
+}
+
+function sanitizeCredibility(value: unknown): Record<string, Credibility> {
+  if (!value || typeof value !== "object") return {}
+  const next: Record<string, Credibility> = {}
+  for (const [id, rating] of Object.entries(value as Record<string, unknown>)) {
+    if (CREDIBILITY.includes(rating as Credibility)) next[id] = rating as Credibility
+  }
+  return next
+}
+
+export function saveCredibility(projectId: string, rating: Credibility | null) {
+  const current = read()
+  const credibility = { ...current.credibility }
+  if (!rating) delete credibility[projectId]
+  else credibility[projectId] = rating
+  write({ ...current, credibility })
 }
 
 export function savePlatform(projectId: string, platformId: PlatformId, entry: PlatformEntry) {

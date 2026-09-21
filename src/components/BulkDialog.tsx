@@ -1,4 +1,5 @@
-import { STATUSES, type FieldPatch } from "@/lib/types"
+import { statusOptionLabel } from "@/lib/taxonomy"
+import { CREDIBILITY, STATUSES, type Credibility, type FieldPatch } from "@/lib/types"
 import { useState } from "react"
 
 export function BulkDialog({
@@ -10,12 +11,13 @@ export function BulkDialog({
   open: boolean
   count: number
   onClose: () => void
-  onApply: (patch: FieldPatch) => void
+  onApply: (patch: FieldPatch, credibility: Credibility | null | undefined) => void
 }) {
   const [deadline, setDeadline] = useState("")
   const [clearDeadline, setClearDeadline] = useState(false)
   const [kpiEst, setKpiEst] = useState("")
   const [status, setStatus] = useState("")
+  const [credibility, setCredibility] = useState("")
 
   if (!open) return null
 
@@ -24,13 +26,16 @@ export function BulkDialog({
   else if (deadline) patch.requestorsDeadline = deadline
   if (kpiEst) patch.kpiEstDeliveryDate = kpiEst
   if (status) patch.status = status
-  const ready = Object.keys(patch).length > 0
+  const credibilityValue: Credibility | null | undefined =
+    credibility === "clear" ? null : credibility === "" ? undefined : (credibility as Credibility)
+  const ready = Object.keys(patch).length > 0 || credibilityValue !== undefined
 
   function close() {
     setDeadline("")
     setClearDeadline(false)
     setKpiEst("")
     setStatus("")
+    setCredibility("")
     onClose()
   }
 
@@ -50,7 +55,7 @@ export function BulkDialog({
           Set one requester deadline, KPI estimate, or status. Blank fields stay as they are.
         </p>
         <label className="mt-4 block">
-          <span className="mb-1 block text-[0.78rem] text-ink-faint">Requester deadline</span>
+          <span className="mb-1 block text-[0.78rem] text-ink-faint">Completion deadline</span>
           <input
             type="date"
             className="field"
@@ -78,10 +83,23 @@ export function BulkDialog({
             <option value="">Leave unchanged</option>
             {STATUSES.map((item) => (
               <option key={item} value={item}>
-                {item}
+                {statusOptionLabel(item)}
               </option>
             ))}
           </select>
+        </label>
+        <label className="mt-3 block">
+          <span className="mb-1 block text-[0.78rem] text-ink-faint">Credibility</span>
+          <select className="field" value={credibility} onChange={(event) => setCredibility(event.target.value)}>
+            <option value="">Leave unchanged</option>
+            {CREDIBILITY.map((item) => (
+              <option key={item} value={item}>
+                {item === "Medium" ? "Med" : item}
+              </option>
+            ))}
+            <option value="clear">Clear credibility</option>
+          </select>
+          <span className="mt-1 block text-[0.75rem] text-ink-faint">Credibility stays on this device.</span>
         </label>
         <div className="mt-5 flex justify-end gap-2">
           <button type="button" className="site-btn focus-ring" onClick={close}>
@@ -92,7 +110,7 @@ export function BulkDialog({
             className="search-submit focus-ring rounded-[6px] px-4 py-2 text-sm disabled:opacity-50"
             disabled={!ready}
             onClick={() => {
-              onApply(patch)
+              onApply(patch, credibilityValue)
               close()
             }}
           >

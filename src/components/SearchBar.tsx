@@ -39,7 +39,7 @@ export function SearchBar({
             name="q"
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Name, SWE id, market, topic, notes"
+            placeholder="Name, person, market, caretaker, SWE id"
             autoComplete="off"
             enterKeyHint="search"
             className="search-shell__input min-h-11 text-base"

@@ -1,13 +1,18 @@
-import { CLOSED_STATUSES, STATUS_SHORT } from "@/lib/taxonomy"
+import { CLOSED_STATUSES, ladderFor, PLATFORMS, STATUS_SHORT } from "@/lib/taxonomy"
 import type {
+  BoardProject,
   DeadlineFilter,
   DeadlineKind,
   ExplicitFilters,
   FieldOverride,
+  PipelineView,
+  PlatformId,
+  PlatformMap,
+  PostedFilter,
   Project,
   SortKey,
 } from "@/lib/types"
-import { STATUSES } from "@/lib/types"
+import { PRIORITIES, STATUSES } from "@/lib/types"
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 
@@ -181,12 +186,84 @@ export type InterpretedQuery = {
   markets: string[]
   deadline: DeadlineFilter | null
   videoLink: "has" | "missing" | null
+  posted: PostedFilter | null
+  missingPlatform: PlatformId | null
+  pipeline: PipelineView | null
+}
+
+function platformByLabel(label: string): PlatformId | null {
+  const match = PLATFORMS.find((platform) => platform.label.toLowerCase() === label.toLowerCase())
+  return match?.id ?? null
 }
 
 const QUERY_RULES: {
   pattern: RegExp
   apply: (out: InterpretedQuery) => void
 }[] = [
+  {
+    pattern: /\bmissing (tiktok|youtube|instagram|facebook|linkedin|threads|reddit|pinterest)\b|\bno (tiktok|youtube|instagram|facebook|linkedin|threads|reddit|pinterest)\b/gi,
+    apply: (out) => {
+      const match = /\b(?:missing|no) (tiktok|youtube|instagram|facebook|linkedin|threads|reddit|pinterest)\b/i.exec(
+        ` ${out.text} `,
+      )
+      const id = match ? platformByLabel(match[1] ?? "") : null
+      if (id) out.missingPlatform = id
+    },
+  },
+  {
+    pattern: /\bmissing (?:on )?x\b|\bno (?:post on )?x\b/gi,
+    apply: (out) => {
+      out.missingPlatform = "x"
+    },
+  },
+  {
+    pattern: /\bnot posted\b|\bunposted\b/gi,
+    apply: (out) => {
+      out.posted = "not-posted"
+    },
+  },
+  {
+    pattern: /\balready live\b|\blive videos\b/gi,
+    apply: (out) => {
+      out.pipeline = "live"
+    },
+  },
+  {
+    pattern: /\bnot complete\b|\bin pipeline\b|\bstill in pipeline\b/gi,
+    apply: (out) => {
+      out.pipeline = "active"
+    },
+  },
+  {
+    pattern: /\brough cut\b/gi,
+    apply: (out) => {
+      out.statuses.push("Editing In Progress")
+    },
+  },
+  {
+    pattern: /\bfirst pass\b/gi,
+    apply: (out) => {
+      out.statuses.push("Ready for Review")
+    },
+  },
+  {
+    pattern: /\bsecond pass\b/gi,
+    apply: (out) => {
+      out.statuses.push("Reviewed - needs edits")
+    },
+  },
+  {
+    pattern: /\bfinals in the can\b|\bfinals\b/gi,
+    apply: (out) => {
+      out.statuses.push("Reviewed - Approved", "Complete")
+    },
+  },
+  {
+    pattern: /\braw\b/gi,
+    apply: (out) => {
+      out.statuses.push("Busy Briefing", "Editing Not Started ( already Briefed)")
+    },
+  },
   {
     pattern: /\bmissing deadline\b|\bno deadline\b|\bwithout deadline\b/gi,
     apply: (out) => {
@@ -322,6 +399,9 @@ export function interpretQuery(query: string): InterpretedQuery {
     markets: [],
     deadline: null,
     videoLink: null,
+    posted: null,
+    missingPlatform: null,
+    pipeline: null,
   }
   let text = ` ${query} `
   for (const rule of QUERY_RULES) {
@@ -349,6 +429,7 @@ function haystack(project: Project): string {
     project.primaryMarket,
     project.status,
     STATUS_SHORT[project.status],
+    ladderFor(project.status).label,
     project.priority,
     project.description,
     project.questionsNotes,
@@ -398,16 +479,38 @@ function hasVideoLink(project: Project): boolean {
   return Boolean(project.reviewLink || project.finalApprovedVideoLink)
 }
 
-export function filterProjects(
-  projects: Project[],
+export function isPosted(platforms: PlatformMap | undefined): boolean {
+  if (!platforms) return false
+  return Object.values(platforms).some((entry) => Boolean(entry?.completedOn || entry?.url))
+}
+
+export function platformPosted(platforms: PlatformMap | undefined, id: PlatformId): boolean {
+  const entry = platforms?.[id]
+  return Boolean(entry?.completedOn || entry?.url)
+}
+
+function boardPlatforms(project: Project): PlatformMap {
+  return (project as BoardProject).platforms ?? {}
+}
+
+function boardCredibility(project: Project): string | null {
+  return (project as BoardProject).credibility ?? null
+}
+
+export function filterProjects<T extends Project>(
+  projects: T[],
   filters: ExplicitFilters,
   today: string,
-): Project[] {
+): T[] {
   const interpreted = interpretQuery(filters.query)
   const statuses = combineLists(filters.statuses, interpreted.statuses)
   const markets = combineLists(filters.markets, interpreted.markets)
   const deadline = combineDeadline(filters.deadline, interpreted.deadline)
   const videoLink = filters.videoLink === "any" ? interpreted.videoLink : filters.videoLink
+  const posted = filters.posted === "any" ? interpreted.posted : filters.posted
+  const missingPlatform = filters.missingPlatform || interpreted.missingPlatform
+  const pipeline = interpreted.pipeline ?? filters.pipeline ?? "all"
+  const wantsComplete = (statuses ?? []).includes("Complete") || pipeline === "live"
   const tokens = interpreted.text
     .toLowerCase()
     .split(/\s+/)
@@ -420,15 +523,29 @@ export function filterProjects(
     if (filters.priorities.length && !filters.priorities.includes(project.priority)) {
       return false
     }
+    if (filters.credibility?.length && !filters.credibility.includes(boardCredibility(project) ?? "")) {
+      return false
+    }
+    if (pipeline === "active" && !wantsComplete && tokens.length === 0 && project.status === "Complete") return false
+    if (pipeline === "live" && project.status !== "Complete") return false
     if (!matchesDeadline(project, deadline, today)) return false
     if (videoLink === "has" && !hasVideoLink(project)) return false
     if (videoLink === "missing" && hasVideoLink(project)) return false
+    if (posted === "posted" && !isPosted(boardPlatforms(project))) return false
+    if (posted === "not-posted" && isPosted(boardPlatforms(project))) return false
+    if (missingPlatform && platformPosted(boardPlatforms(project), missingPlatform)) return false
     if (tokens.length) {
       const hay = haystack(project)
       if (!tokens.every((token) => hay.includes(token))) return false
     }
     return true
   })
+}
+
+function priorityRank(value: string): number {
+  const index = PRIORITIES.indexOf(value as (typeof PRIORITIES)[number])
+  if (value === "Med") return PRIORITIES.indexOf("Medium")
+  return index === -1 ? PRIORITIES.length : index
 }
 
 function statusRank(status: string): number {
@@ -445,7 +562,7 @@ function urgencyRank(project: Project, today: string): number {
   return 4
 }
 
-export function sortProjects(projects: Project[], sort: SortKey, today: string): Project[] {
+export function sortProjects<T extends Project>(projects: T[], sort: SortKey, today: string): T[] {
   const copy = [...projects]
   copy.sort((a, b) => {
     if (sort === "name") return a.name.localeCompare(b.name)
@@ -454,6 +571,23 @@ export function sortProjects(projects: Project[], sort: SortKey, today: string):
     }
     if (sort === "status") {
       return statusRank(a.status) - statusRank(b.status) || a.name.localeCompare(b.name)
+    }
+    if (sort === "recency") {
+      const ad = a.recordingDate || a.createdTime.slice(0, 10)
+      const bd = b.recordingDate || b.createdTime.slice(0, 10)
+      if (ad && bd && ad !== bd) return ad < bd ? 1 : -1
+      if (ad && !bd) return -1
+      if (!ad && bd) return 1
+      return a.name.localeCompare(b.name)
+    }
+    if (sort === "priority") {
+      return priorityRank(a.priority) - priorityRank(b.priority) || a.name.localeCompare(b.name)
+    }
+    if (sort === "credibility") {
+      return (
+        priorityRank(boardCredibility(a) ?? "") - priorityRank(boardCredibility(b) ?? "") ||
+        a.name.localeCompare(b.name)
+      )
     }
     if (sort === "deadline") {
       const ad = a.requestorsDeadline
@@ -477,12 +611,12 @@ export function sortProjects(projects: Project[], sort: SortKey, today: string):
   return copy
 }
 
-export function searchProjects(
-  projects: Project[],
+export function searchProjects<T extends Project>(
+  projects: T[],
   filters: ExplicitFilters,
   sort: SortKey,
   today: string,
-): Project[] {
+): T[] {
   return sortProjects(filterProjects(projects, filters, today), sort, today)
 }
 
@@ -500,8 +634,18 @@ export const EMPTY_FILTERS: ExplicitFilters = {
   statuses: [],
   markets: [],
   priorities: [],
+  credibility: [],
   deadline: "any",
   videoLink: "any",
+  posted: "any",
+  missingPlatform: "",
+  pipeline: "all",
+}
+
+/** Opening view: still in the edit pipeline. Complete stays one click away. */
+export const BOARD_FILTERS: ExplicitFilters = {
+  ...EMPTY_FILTERS,
+  pipeline: "active",
 }
 
 export function filtersAreActive(filters: ExplicitFilters): boolean {
@@ -510,7 +654,11 @@ export function filtersAreActive(filters: ExplicitFilters): boolean {
     filters.statuses.length > 0 ||
     filters.markets.length > 0 ||
     filters.priorities.length > 0 ||
+    (filters.credibility?.length ?? 0) > 0 ||
     filters.deadline !== "any" ||
-    filters.videoLink !== "any"
+    filters.videoLink !== "any" ||
+    (filters.posted ?? "any") !== "any" ||
+    Boolean(filters.missingPlatform) ||
+    (filters.pipeline ?? "all") !== "active"
   )
 }

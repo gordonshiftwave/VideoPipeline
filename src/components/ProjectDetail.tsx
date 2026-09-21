@@ -1,26 +1,40 @@
 import { PlatformSection } from "@/components/PlatformSection"
 import { formatDate } from "@/lib/projects"
-import { DEFAULT_DOT, STATUS_DOT, STATUS_SHORT } from "@/lib/taxonomy"
-import { STATUSES, type FieldPatch, type PlatformEntry, type PlatformId, type PlatformMap, type Project } from "@/lib/types"
+import { CREDIBILITY_FIELD, DEFAULT_DOT, ladderFor, STATUS_DOT, statusOptionLabel } from "@/lib/taxonomy"
+import {
+  CREDIBILITY,
+  STATUSES,
+  type Credibility,
+  type FieldPatch,
+  type PlatformEntry,
+  type PlatformId,
+  type PlatformMap,
+  type Project,
+} from "@/lib/types"
 
 export function ProjectDetail({
   project,
   today,
   platforms,
+  credibility,
   edited,
   onClose,
   onPatch,
   onPlatform,
+  onCredibility,
 }: {
   project: Project
   today: string
   platforms: PlatformMap
+  credibility: Credibility | null
   edited: boolean
   onClose: () => void
   onPatch: (patch: FieldPatch) => void
   onPlatform: (platformId: PlatformId, entry: PlatformEntry) => void
+  onCredibility: (rating: Credibility | null) => void
 }) {
   const dot = STATUS_DOT[project.status] ?? DEFAULT_DOT
+  const ladder = ladderFor(project.status)
   const statuses = (STATUSES as readonly string[]).includes(project.status)
     ? [...STATUSES]
     : [project.status, ...STATUSES]
@@ -38,10 +52,11 @@ export function ProjectDetail({
           </h2>
           <p className="mt-1 flex items-center gap-2 text-[0.82rem] text-ink-soft">
             <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: dot }} />
-            {STATUS_SHORT[project.status] ?? project.status}
+            {ladder.label}
             {project.primaryMarket ? ` · ${project.primaryMarket}` : ""}
             {project.requester.length ? ` · ${project.requester.join(", ")}` : ""}
           </p>
+          {project.editType ? <p className="mt-1 text-[0.82rem] text-ink-soft">{project.editType}</p> : null}
           {edited ? <p className="mt-1 text-[0.78rem] text-calm">Edited on this device</p> : null}
         </div>
         <button type="button" className="site-btn focus-ring hidden shrink-0 md:inline-flex" onClick={onClose}>
@@ -51,24 +66,45 @@ export function ProjectDetail({
 
       <div className="px-4 py-4 sm:px-5 sm:py-5">
         <label className="block">
-          <span className="mb-1 block text-[0.78rem] text-ink-faint">Status</span>
+          <span className="mb-1 block text-[0.78rem] text-ink-faint">Edit status</span>
           <select
             className="field"
             value={project.status}
-            aria-label="Status"
+            aria-label="Edit status"
             onChange={(event) => onPatch({ status: event.target.value })}
           >
             {statuses.map((status) => (
               <option key={status} value={status}>
-                {status}
+                {statusOptionLabel(status)}
               </option>
             ))}
           </select>
+          <span className="mt-1 block text-[0.75rem] text-ink-faint">Airtable still stores “{project.status}”.</span>
         </label>
+
+        <div className="mt-4">
+          <p className="mb-1 text-[0.78rem] text-ink-faint">Credibility</p>
+          <div className="flex flex-wrap gap-1.5">
+            {CREDIBILITY.map((rating) => (
+              <button
+                key={rating}
+                type="button"
+                className="radius-chip focus-ring"
+                aria-pressed={credibility === rating}
+                onClick={() => onCredibility(credibility === rating ? null : rating)}
+              >
+                {rating === "Medium" ? "Med" : rating}
+              </button>
+            ))}
+          </div>
+          <p className="mt-1 text-[0.75rem] text-ink-faint">
+            Saved on this device. Planned column: {CREDIBILITY_FIELD}.
+          </p>
+        </div>
 
         <div className="mt-4 grid gap-3">
           <DateField
-            label="Requester deadline"
+            label="Completion deadline"
             value={project.requestorsDeadline}
             onChange={(requestorsDeadline) => onPatch({ requestorsDeadline })}
           />

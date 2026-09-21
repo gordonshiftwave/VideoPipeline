@@ -1,15 +1,17 @@
 import { PlatformSection } from "@/components/PlatformSection"
-import { formatDate } from "@/lib/projects"
+import { formatDate, isDateInput, isHttpUrl } from "@/lib/projects"
 import { CREDIBILITY_FIELD, DEFAULT_DOT, ladderFor, STATUS_DOT, statusOptionLabel } from "@/lib/taxonomy"
 import {
   CREDIBILITY,
   STATUSES,
+  TOPIC_TAGS,
   type Credibility,
   type FieldPatch,
   type PlatformEntry,
   type PlatformId,
   type PlatformMap,
   type Project,
+  type TopicTag,
 } from "@/lib/types"
 
 export function ProjectDetail({
@@ -17,21 +19,27 @@ export function ProjectDetail({
   today,
   platforms,
   credibility,
+  confirmedTopics,
+  suggestedTopics,
   edited,
   onClose,
   onPatch,
   onPlatform,
   onCredibility,
+  onTopic,
 }: {
   project: Project
   today: string
   platforms: PlatformMap
   credibility: Credibility | null
+  confirmedTopics: TopicTag[]
+  suggestedTopics: TopicTag[]
   edited: boolean
   onClose: () => void
   onPatch: (patch: FieldPatch) => void
   onPlatform: (platformId: PlatformId, entry: PlatformEntry) => void
   onCredibility: (rating: Credibility | null) => void
+  onTopic: (tag: TopicTag, on: boolean) => void
 }) {
   const dot = STATUS_DOT[project.status] ?? DEFAULT_DOT
   const ladder = ladderFor(project.status)
@@ -59,7 +67,7 @@ export function ProjectDetail({
           {project.editType ? <p className="mt-1 text-[0.82rem] text-ink-soft">{project.editType}</p> : null}
           {edited ? <p className="mt-1 text-[0.78rem] text-calm">Edited on this device</p> : null}
         </div>
-        <button type="button" className="site-btn focus-ring hidden shrink-0 md:inline-flex" onClick={onClose}>
+        <button type="button" className="site-btn focus-ring shrink-0" onClick={onClose}>
           Close
         </button>
       </div>
@@ -102,9 +110,12 @@ export function ProjectDetail({
           </p>
         </div>
 
+        <TopicTags confirmed={confirmedTopics} suggested={suggestedTopics} onTopic={onTopic} />
+
         <div className="mt-4 grid gap-3">
           <DateField
-            label="Completion deadline"
+            label="Delivery date"
+            prominent
             value={project.requestorsDeadline}
             onChange={(requestorsDeadline) => onPatch({ requestorsDeadline })}
           />
@@ -164,14 +175,65 @@ export function ProjectDetail({
   )
 }
 
+function TopicTags({
+  confirmed,
+  suggested,
+  onTopic,
+}: {
+  confirmed: TopicTag[]
+  suggested: TopicTag[]
+  onTopic: (tag: TopicTag, on: boolean) => void
+}) {
+  return (
+    <div className="mt-4">
+      <p className="mb-1 text-[0.78rem] text-ink-faint">Category / Topic tags</p>
+      <div className="flex flex-wrap items-center gap-1.5">
+        {TOPIC_TAGS.map((tag) => {
+          const on = confirmed.includes(tag)
+          const hint = suggested.includes(tag)
+          return (
+            <span key={tag} className="inline-flex items-center gap-1">
+              <button
+                type="button"
+                className="radius-chip focus-ring"
+                aria-pressed={on}
+                onClick={() => onTopic(tag, !on)}
+              >
+                {tag}
+                {hint && !on ? " · suggested" : ""}
+              </button>
+              {hint && !on ? (
+                <button type="button" className="text-link focus-ring text-[0.75rem]" onClick={() => onTopic(tag, false)}>
+                  Not this
+                </button>
+              ) : null}
+            </span>
+          )
+        })}
+      </div>
+      {suggested.length ? (
+        <p className="mt-1 text-[0.75rem] text-ink-faint">
+          Suggested — add if it fits. Click the tag to keep it, or Not this to leave it off.
+        </p>
+      ) : (
+        <p className="mt-1 text-[0.75rem] text-ink-faint">
+          Stored in this browser. Primary Market in Airtable does not include these yet.
+        </p>
+      )}
+    </div>
+  )
+}
+
 function DateField({
   label,
   value,
   onChange,
+  prominent = false,
 }: {
   label: string
   value: string | null
   onChange: (value: string | null) => void
+  prominent?: boolean
 }) {
   return (
     <label className="block">
@@ -185,9 +247,13 @@ function DateField({
       </span>
       <input
         type="date"
-        className="field"
+        className={prominent ? "date-picker" : "field"}
         value={value ?? ""}
-        onChange={(event) => onChange(event.target.value || null)}
+        onChange={(event) => {
+          const next = event.target.value
+          if (next && !isDateInput(next)) return
+          onChange(next || null)
+        }}
       />
     </label>
   )
@@ -203,7 +269,7 @@ function Meta({ label, value }: { label: string; value: string }) {
 }
 
 function LinkRow({ label, href }: { label: string; href: string | null }) {
-  if (!href) {
+  if (!isHttpUrl(href)) {
     return (
       <li className="text-ink-faint">
         {label} <span className="text-[0.82rem]">— not added</span>

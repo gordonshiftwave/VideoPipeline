@@ -12,8 +12,11 @@ import {
   BOARD_FILTERS,
   filtersAreActive,
   interpretQuery,
+  isDateInput,
   overrideKeys,
+  reorderVisible,
   searchProjects,
+  sortProjects,
   todayISO,
 } from "@/lib/projects"
 import {
@@ -21,15 +24,20 @@ import {
   getLocalStore,
   getServerStore,
   saveCredibility,
+  saveOrder,
   savePlatform,
   saveUpdates,
+  setTopic,
   subscribeLocalStore,
 } from "@/lib/storage"
 import { PLATFORMS, TABLE_URL } from "@/lib/taxonomy"
-import type { Catalog, Credibility, Density, ExplicitFilters, FieldPatch, PlatformId, SortKey } from "@/lib/types"
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react"
+import { splitTopics, suggestedTopics } from "@/lib/topics"
+import type { Catalog, Credibility, Density, ExplicitFilters, FieldPatch, PlatformId, SortKey, TopicTag } from "@/lib/types"
+import { TOPIC_TAGS } from "@/lib/types"
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type PointerEvent, type KeyboardEvent as ReactKeyboardEvent } from "react"
 
 const SORTS: { value: SortKey; label: string }[] = [
+  { value: "manual", label: "Manual / Priority order" },
   { value: "urgency", label: "Urgency" },
   { value: "deadline", label: "Deadline" },
   { value: "recency", label: "Recency" },
@@ -53,27 +61,49 @@ export function App() {
   const [bulkOpen, setBulkOpen] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
+  const [pulseId, setPulseId] = useState<string | null>(null)
   const [urlReady, setUrlReady] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
   const anchorRef = useRef(0)
+  const hydrated = useRef(false)
+  const skipClose = useRef(false)
+  const dragFrom = useRef<number | null>(null)
+  const [dragIndex, setDragIndex] = useState<number | null>(null)
+  const [dropIndex, setDropIndex] = useState<number | null>(null)
   const [today, setToday] = useState(() => todayISO())
 
   const projects = useMemo(
     () =>
-      catalog.projects.map((project) => ({
-        ...applyOverride(project, store.overrides[project.id]),
-        credibility: store.credibility[project.id] ?? null,
-        platforms: store.platforms[project.id] ?? {},
-      })),
-    [catalog.projects, store.overrides, store.credibility, store.platforms],
+      catalog.projects.map((project) => {
+        const next = applyOverride(project, store.overrides[project.id])
+        const topics = splitTopics(store.topics[project.id], store.topicDismissed[project.id], suggestedTopics(next))
+        return {
+          ...next,
+          credibility: store.credibility[project.id] ?? null,
+          platforms: store.platforms[project.id] ?? {},
+          confirmedTopics: topics.confirmed,
+          suggestedTopics: topics.suggested,
+        }
+      }),
+    [catalog.projects, store.overrides, store.credibility, store.platforms, store.topics, store.topicDismissed],
   )
   const visible = useMemo(
-    () => searchProjects(projects, filters, sort, today),
-    [projects, filters, sort, today],
+    () => searchProjects(projects, filters, sort, today, store.order),
+    [projects, filters, sort, today, store.order],
   )
   const statusCounts = useMemo(() => countBy(projects, (project) => project.status), [projects])
   const marketCounts = useMemo(() => countBy(projects, (project) => project.primaryMarket), [projects])
   const priorityCounts = useMemo(() => countBy(projects, (project) => project.priority), [projects])
+  const topicCounts = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const tag of TOPIC_TAGS) counts.set(tag, 0)
+    for (const project of projects) {
+      for (const tag of [...project.confirmedTopics, ...project.suggestedTopics]) {
+        counts.set(tag, (counts.get(tag) ?? 0) + 1)
+      }
+    }
+    return counts
+  }, [projects])
   const active = projects.find((project) => project.id === activeId) ?? null
   const interpreted = interpretQuery(filters.query)
   const activeFilterCount =
@@ -85,18 +115,22 @@ export function App() {
     (filters.videoLink !== "any" ? 1 : 0) +
     (filters.posted !== "any" ? 1 : 0) +
     (filters.missingPlatform ? 1 : 0) +
+    (filters.topics.length ? 1 : 0) +
     (filters.pipeline !== "active" ? 1 : 0)
   const localEditCount = Object.keys(store.overrides).length
   const dueToday = projects.filter((project) => deadlineKind(project, today) === "today").length
   const overdue = projects.filter((project) => deadlineKind(project, today) === "overdue").length
 
   useEffect(() => {
+    if (hydrated.current || catalog.projects.length === 0) return
+    hydrated.current = true
     const params = new URLSearchParams(window.location.search)
-    const next = { ...BOARD_FILTERS }
+    const next = { ...BOARD_FILTERS, topics: [] as string[] }
     next.query = params.get("q") ?? ""
     next.statuses = params.getAll("status")
     next.markets = params.getAll("market")
     next.priorities = params.getAll("priority")
+    next.topics = params.getAll("topic").filter((tag): tag is TopicTag => (TOPIC_TAGS as readonly string[]).includes(tag))
     next.credibility = params.getAll("credibility").filter((value): value is Credibility =>
       value === "High" || value === "Medium" || value === "Low",
     )
@@ -115,6 +149,7 @@ export function App() {
     setFilters(next)
     const sortParam = params.get("sort")
     if (SORTS.some((item) => item.value === sortParam)) setSort(sortParam as SortKey)
+    else if (getLocalStore().order.length > 0) setSort("manual")
     if (params.get("view") === "list" || params.get("view") === "cards") {
       setDensity(params.get("view") as Density)
     }
@@ -122,6 +157,7 @@ export function App() {
       next.statuses.length ||
       next.markets.length ||
       next.priorities.length ||
+      next.topics.length ||
       next.credibility.length ||
       next.deadline !== "any" ||
       next.videoLink !== "any" ||
@@ -135,7 +171,10 @@ export function App() {
       const match = catalog.projects.find(
         (project) => project.id === projectParam || project.uniqueId === projectParam,
       )
-      if (match) setActiveId(match.id)
+      if (match) {
+        skipClose.current = true
+        setActiveId(match.id)
+      }
     }
     setUrlReady(true)
   }, [catalog.projects])
@@ -159,6 +198,7 @@ export function App() {
     filters.markets.forEach((market) => params.append("market", market))
     filters.priorities.forEach((priority) => params.append("priority", priority))
     filters.credibility.forEach((rating) => params.append("credibility", rating))
+    filters.topics.forEach((topic) => params.append("topic", topic))
     if (filters.deadline !== "any") params.set("deadline", filters.deadline)
     if (filters.videoLink !== "any") params.set("link", filters.videoLink)
     if (filters.posted !== "any") params.set("posted", filters.posted)
@@ -178,6 +218,32 @@ export function App() {
   useEffect(() => {
     if (cursor >= visible.length) setCursor(Math.max(0, visible.length - 1))
   }, [cursor, visible.length])
+
+  useEffect(() => {
+    if (!urlReady || !activeId) return
+    if (visible.some((project) => project.id === activeId)) {
+      skipClose.current = false
+      return
+    }
+    if (skipClose.current) {
+      skipClose.current = false
+      setFilters((current) => (current.pipeline === "all" ? current : { ...current, pipeline: "all" }))
+      return
+    }
+    setActiveId(null)
+  }, [urlReady, activeId, visible])
+
+  useEffect(() => {
+    const allowed = new Set(visible.map((project) => project.id))
+    setSelected((current) => {
+      const next = current.filter((id) => allowed.has(id))
+      return next.length === current.length ? current : next
+    })
+  }, [visible])
+
+  useEffect(() => {
+    if (bulkOpen && selected.length === 0) setBulkOpen(false)
+  }, [bulkOpen, selected.length])
 
   useEffect(() => {
     document.querySelector(`[data-index="${cursor}"]`)?.scrollIntoView({ block: "nearest" })
@@ -244,9 +310,17 @@ export function App() {
     })
   }
 
+  useEffect(() => {
+    if (!pulseId) return
+    document.getElementById(`project-${pulseId}`)?.scrollIntoView({ block: "center" })
+    const timer = window.setTimeout(() => setPulseId((current) => (current === pulseId ? null : current)), 1600)
+    return () => window.clearTimeout(timer)
+  }, [pulseId, visible])
+
   async function persist(ids: string[], patch: FieldPatch) {
     const updates = ids.map((id) => ({ id, ...patch }))
     saveUpdates(updates)
+    if (ids.length === 1 && patch.requestorsDeadline !== undefined) setPulseId(ids[0])
     if (!catalog.writable) {
       setNotice("Saved on this device. Airtable writes are off until a personal access token is set.")
       return
@@ -286,15 +360,61 @@ export function App() {
     }
   }
 
-  function toggleQuick(query: string) {
-    setFilters((current) => {
-      const has = current.query.toLowerCase().includes(query)
-      if (!has) {
-        return { ...current, query: current.query.trim() ? `${current.query.trim()} ${query}` : query }
-      }
-      const stripped = current.query.replace(new RegExp(query, "ig"), " ").replace(/\s+/g, " ").trim()
-      return { ...current, query: stripped }
+  function commitReorder(fromIndex: number, toIndex: number) {
+    if (fromIndex === toIndex || toIndex < 0 || toIndex >= visible.length) return
+    const visibleIds = visible.map((project) => project.id)
+    const seeded =
+      store.order.length > 0
+        ? [...store.order]
+        : sortProjects(projects, sort === "manual" ? "urgency" : sort, today).map((project) => project.id)
+    for (const project of projects) {
+      if (!seeded.includes(project.id)) seeded.push(project.id)
+    }
+    saveOrder(reorderVisible(seeded, visibleIds, fromIndex, toIndex))
+    setSort("manual")
+    setCursor(toIndex)
+    window.requestAnimationFrame(() => {
+      document.querySelector<HTMLButtonElement>(`[data-index="${toIndex}"] [data-drag-handle]`)?.focus()
     })
+  }
+
+  function rowAtPoint(x: number, y: number): number | null {
+    const element = document.elementFromPoint(x, y)
+    const row = element instanceof Element ? element.closest("[data-index]") : null
+    if (!row) return null
+    const index = Number(row.getAttribute("data-index"))
+    return Number.isFinite(index) ? index : null
+  }
+
+  function onDragStart(index: number, event: PointerEvent<HTMLButtonElement>) {
+    if (event.button !== 0) return
+    dragFrom.current = index
+    setDragIndex(index)
+    setDropIndex(index)
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+
+  function onDragMove(event: PointerEvent<HTMLButtonElement>) {
+    if (dragFrom.current === null) return
+    const index = rowAtPoint(event.clientX, event.clientY)
+    if (index !== null) setDropIndex(index)
+  }
+
+  function onDragEnd(event: PointerEvent<HTMLButtonElement>) {
+    const from = dragFrom.current
+    dragFrom.current = null
+    setDragIndex(null)
+    setDropIndex(null)
+    if (from === null) return
+    const to = rowAtPoint(event.clientX, event.clientY)
+    if (to === null) return
+    commitReorder(from, to)
+  }
+
+  function onKeyboardMove(index: number, event: ReactKeyboardEvent<HTMLButtonElement>) {
+    if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return
+    event.preventDefault()
+    commitReorder(index, event.key === "ArrowUp" ? index - 1 : index + 1)
   }
 
   const reading = [
@@ -412,7 +532,7 @@ export function App() {
             />
             <FilterChip
               label="Overdue"
-              pressed={filters.deadline === "overdue" || filters.query.toLowerCase().includes("overdue")}
+              pressed={filters.deadline === "overdue"}
               onClick={() =>
                 setFilters((current) => ({
                   ...current,
@@ -421,25 +541,33 @@ export function App() {
               }
             />
             <FilterChip
-              label="Missing Instagram"
-              pressed={filters.missingPlatform === "instagram"}
+              label="Missing deadline"
+              pressed={filters.deadline === "missing"}
               onClick={() =>
                 setFilters((current) => ({
                   ...current,
-                  missingPlatform: current.missingPlatform === "instagram" ? "" : "instagram",
+                  deadline: current.deadline === "missing" ? "any" : "missing",
                 }))
               }
             />
-            <FilterChip
-              label="Seniors"
-              pressed={filters.query.toLowerCase().includes("seniors")}
-              onClick={() => toggleQuick("seniors")}
-            />
-            <FilterChip
-              label="Pro Sports"
-              pressed={filters.query.toLowerCase().includes("pro sports")}
-              onClick={() => toggleQuick("pro sports")}
-            />
+          </div>
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+            <span className="shrink-0 text-[0.72rem] font-semibold text-ink-faint">Topics</span>
+            {TOPIC_TAGS.map((tag) => (
+              <FilterChip
+                key={tag}
+                label={tag}
+                pressed={filters.topics.includes(tag)}
+                onClick={() =>
+                  setFilters((current) => ({
+                    ...current,
+                    topics: current.topics.includes(tag)
+                      ? current.topics.filter((item) => item !== tag)
+                      : [...current.topics, tag],
+                  }))
+                }
+              />
+            ))}
           </div>
           {reading.length ? (
             <p className="text-[0.82rem] text-ink-faint">
@@ -507,6 +635,7 @@ export function App() {
                 statusCounts={statusCounts}
                 marketCounts={marketCounts}
                 priorityCounts={priorityCounts}
+                topicCounts={topicCounts}
                 onChange={setFilters}
               />
             </div>
@@ -524,12 +653,16 @@ export function App() {
               <h2 className="font-display text-[1.35rem] font-semibold leading-[1.3] text-ink sm:text-[1.55rem]">
                 {visible.length} of {projects.length}
               </h2>
+              <p className="text-sm text-ink-soft">
+                Open a row to edit · Drag to prioritize · Pick a delivery date on the calendar.
+              </p>
               <p className="text-sm text-ink-faint">
                 {filters.pipeline === "live"
                   ? "Already live"
                   : filters.pipeline === "all"
                     ? "All projects, including already live"
                     : "In pipeline"}
+                {sort === "manual" ? " · Manual order" : ""}
                 {" · "}
                 {dueToday} due today
                 {overdue ? ` · ${overdue} overdue` : ""}
@@ -576,6 +709,11 @@ export function App() {
                       density={density}
                       platforms={project.platforms}
                       credibility={project.credibility}
+                      confirmedTopics={project.confirmedTopics}
+                      suggestedTopics={project.suggestedTopics}
+                      pulse={pulseId === project.id}
+                      dragging={dragIndex === index}
+                      dropTarget={dropIndex === index && dragIndex !== null && dragIndex !== index}
                       selected={selected.includes(project.id)}
                       active={project.id === activeId}
                       cursor={index === cursor}
@@ -585,6 +723,14 @@ export function App() {
                         setActiveId(project.id)
                       }}
                       onToggle={(shiftKey) => toggleOne(project.id, index, shiftKey)}
+                      onDeadline={(requestorsDeadline) => {
+                        if (requestorsDeadline && !isDateInput(requestorsDeadline)) return
+                        void persist([project.id], { requestorsDeadline })
+                      }}
+                      onDragStart={(event) => onDragStart(index, event)}
+                      onDragMove={onDragMove}
+                      onDragEnd={onDragEnd}
+                      onKeyboardMove={(event) => onKeyboardMove(index, event)}
                     />
                   </li>
                 ))}
@@ -609,10 +755,16 @@ export function App() {
               today={today}
               platforms={store.platforms[active.id] ?? {}}
               credibility={store.credibility[active.id] ?? null}
+              confirmedTopics={active.confirmedTopics}
+              suggestedTopics={active.suggestedTopics}
               edited={overrideKeys(store.overrides[active.id]).length > 0}
               onClose={() => setActiveId(null)}
               onPatch={(patch) => void persist([active.id], patch)}
               onPlatform={(platformId, entry) => savePlatform(active.id, platformId, entry)}
+              onTopic={(tag, on) => {
+                setTopic(active.id, tag, on)
+                setNotice(on ? `Tagged ${tag} on this device.` : `Removed ${tag} on this device.`)
+              }}
               onCredibility={(rating) => {
                 saveCredibility(active.id, rating)
                 setNotice(rating ? "Saved credibility on this device." : "Cleared credibility on this device.")
@@ -664,10 +816,14 @@ export function App() {
         count={selected.length}
         onClose={() => setBulkOpen(false)}
         onApply={(patch, credibility) => {
+          if (selected.length === 0) return
+          const safe: FieldPatch = { ...patch }
+          if (safe.requestorsDeadline && !isDateInput(safe.requestorsDeadline)) delete safe.requestorsDeadline
+          if (safe.kpiEstDeliveryDate && !isDateInput(safe.kpiEstDeliveryDate)) delete safe.kpiEstDeliveryDate
           if (credibility !== undefined) {
             for (const id of selected) saveCredibility(id, credibility)
           }
-          if (Object.keys(patch).length > 0) void persist(selected, patch)
+          if (Object.keys(safe).length > 0) void persist(selected, safe)
           else if (credibility !== undefined) setNotice("Saved credibility on this device.")
         }}
       />

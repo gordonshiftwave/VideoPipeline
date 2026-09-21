@@ -80,12 +80,22 @@ export type PlatformEntry = {
 
 export type PlatformMap = Partial<Record<PlatformId, PlatformEntry>>
 
+/** Local categories. Primary Market in Airtable does not have these yet. */
+export const TOPIC_TAGS = ["Seniors", "Women's Space", "Events testimonial"] as const
+export type TopicTag = (typeof TOPIC_TAGS)[number]
+
 export type LocalStore = {
   version: 1
   overrides: Record<string, FieldOverride>
   platforms: Record<string, PlatformMap>
   /** Planned Airtable field: Credibility. Not on the Projects table yet. */
   credibility: Record<string, Credibility>
+  /** Confirmed category tags, keyed by project id. */
+  topics: Record<string, TopicTag[]>
+  /** Suggestions the user marked as not this project. */
+  topicDismissed: Record<string, TopicTag[]>
+  /** Project ids in manual priority order. Empty until the user drags. */
+  order: string[]
 }
 
 export type DeadlineFilter = "any" | "has" | "missing" | "overdue" | "today"
@@ -93,7 +103,16 @@ export type VideoLinkFilter = "any" | "has" | "missing"
 export type PostedFilter = "any" | "posted" | "not-posted"
 /** active = still in the edit pipeline. live = Complete. all = both. */
 export type PipelineView = "active" | "live" | "all"
-export type SortKey = "urgency" | "deadline" | "recency" | "priority" | "credibility" | "name" | "status" | "market"
+export type SortKey =
+  | "manual"
+  | "urgency"
+  | "deadline"
+  | "recency"
+  | "priority"
+  | "credibility"
+  | "name"
+  | "status"
+  | "market"
 export type Density = "cards" | "list"
 
 export type ExplicitFilters = {
@@ -108,12 +127,15 @@ export type ExplicitFilters = {
   /** Hide a project that has no completion date or URL on this platform. */
   missingPlatform: PlatformId | ""
   pipeline: PipelineView
+  topics: string[]
 }
 
 /** A project plus device-only fields used for sort and filter. */
 export type BoardProject = Project & {
   credibility: Credibility | null
   platforms: PlatformMap
+  confirmedTopics: TopicTag[]
+  suggestedTopics: TopicTag[]
 }
 
 export type Catalog = {

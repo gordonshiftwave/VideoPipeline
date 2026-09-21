@@ -50,25 +50,25 @@ If the token is set but Airtable cannot be read, the app falls back to the snaps
 
 ## What you can do
 
-- The board opens on work still in the pipeline. **Already live** (Airtable status Complete) stays one chip away and is not removed. Each row shows market, name and description, recording or added date, posted or not, video links, completion deadline, and the cut stage.
+- The board opens on work still in the pipeline. **Already live** (Airtable status Complete) stays one chip away and is not removed. Each row shows market, name and description, recording or added date, posted or not, video links, a delivery-date calendar, and the cut stage. Drag the handle to set a priority order, saved in this browser.
 - Cut stages are display names for the existing Status field: Raw (Busy Briefing, Editing Not Started), Rough cut (Editing In Progress), First pass (Ready for Review), Second pass (Reviewed - needs edits), Finals in the can (Reviewed - Approved, Complete). Saving a status still writes the Airtable string.
 - Search `Julianne`, `caretaker`, a person, a market, or `SWE-0069`. Phrases include `rough cut`, `first pass`, `overdue`, `not posted`, `missing instagram`, and `already live`.
-- Filter not posted, not complete, market, status, overdue, and missing link. Missing Instagram, TikTok, YouTube, and the other platforms are in Filters.
-- Credibility (High / Med / Low) is optional and stored in this browser, shaped for a future `Credibility` column. Priority remains the Airtable field. Sort by deadline, recency, priority, credibility, or market.
+- Filter chips: In pipeline, Already live, Not posted, Missing link, Overdue, Missing deadline. Category tags — Seniors, Women’s Space, Events testimonial — sit on their own Topics row and in Filters. They are stored in this browser (Airtable Primary Market does not have them yet). A tag is only suggested when the name, description, or video topic hints at it; confirm it or choose Not this. Missing Instagram, TikTok, YouTube, and the other platforms stay inside Filters under “Missing on”, not as a top chip.
+- Credibility (High / Med / Low) is optional and stored in this browser, shaped for a future `Credibility` column. Priority remains the Airtable field. Sort by manual priority (after you drag), deadline, recency, priority, credibility, or market.
 - One source can have several platform cuts. Edit type and notes stay on the project. Each platform can be marked as its own cut, with a completion date and URL, until those columns exist.
 - Filter by status, market, priority, deadline, and whether a review or final video link exists. Filters stay in the sticky header. On a phone they open from the Filters chip.
 - Switch between comfortable and compact rows. `/` focuses search, `j` / `k` move through the list, Enter opens the highlighted project when focus is on the page, `x` selects it, Esc closes the detail.
 - Open a project for every date, the status select, notes, and clickable brief, Frame.io review, source footage, final video, and evidence-library links.
-- Select several projects and set one completion deadline, status, or credibility for all of them.
+- Select several projects and set one delivery date, status, or credibility for all of them. The same calendar control is on each row.
 - Record a completion date, URL, and platform-specific cut per platform (TikTok, YouTube, Instagram, Facebook, LinkedIn, X, Threads, Reddit, Pinterest). Pinterest is listed last. These values stay on this device. They are shaped to map later to columns named like `TikTok Completed On`, `TikTok URL`, and `TikTok Cut`. Those columns are not on the Projects table, and the app does not invent them.
 
 ## Screens
 
-**Queue.** Paper background, the Shiftwave wave, a search pill, and chips for In pipeline, Already live, Not posted, Missing link, Overdue, Missing Instagram, Seniors, and Pro Sports. Rows are one line: market, project, recorded date, posted, links, deadline, cut stage.
+**Queue.** Paper background, the Shiftwave wave, a search pill, and chips for In pipeline, Already live, Not posted, Missing link, Overdue, and Missing deadline. Topics are Seniors, Women’s Space, and Events testimonial. The hint under the count is: open a row to edit, drag to prioritize, pick a delivery date on the calendar. Rows show a drag handle, market, project, recorded date, posted, links, a Due calendar, and cut stage.
 
-**Filters.** Status options use the cut names next to the Airtable values. Market, priority, credibility, posted, missing platform, deadline, and video link sit under the sticky search.
+**Filters.** Status options use the cut names next to the Airtable values. Market, category tags, priority, credibility, posted, missing platform, deadline, and video link sit under the sticky search.
 
-**Project.** The side panel (full screen on a phone, with Back) sets the completion deadline, the Airtable status under its cut name, credibility, links, edit type, notes, and per-platform cuts.
+**Project.** The side panel (full screen on a phone, with Back and Close) sets the delivery date on a calendar, category tags, the Airtable status under its cut name, credibility, links, edit type, notes, and per-platform cuts. A link that is not http or https shows as not added.
 
 **Read-only banner.** When no write token is configured, a line above the search says edits stay in this browser. “Clear N local edits” throws those overrides away. With a token, the same line says changes sync to Airtable, and a notice confirms each save.
 

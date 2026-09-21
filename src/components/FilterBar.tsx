@@ -1,17 +1,19 @@
 import { PLATFORMS, statusOptionLabel } from "@/lib/taxonomy"
-import { CREDIBILITY, PRIORITIES, STATUSES, type ExplicitFilters } from "@/lib/types"
+import { CREDIBILITY, PRIORITIES, STATUSES, TOPIC_TAGS, type ExplicitFilters } from "@/lib/types"
 
 export function FilterBar({
   filters,
   statusCounts,
   marketCounts,
   priorityCounts,
+  topicCounts,
   onChange,
 }: {
   filters: ExplicitFilters
   statusCounts: Map<string, number>
   marketCounts: Map<string, number>
   priorityCounts: Map<string, number>
+  topicCounts: Map<string, number>
   onChange: (next: ExplicitFilters) => void
 }) {
   const statuses = [...STATUSES, ...[...statusCounts.keys()].filter((status) => !STATUSES.includes(status as (typeof STATUSES)[number]))]
@@ -44,6 +46,16 @@ export function FilterBar({
         }))}
         selected={filters.markets}
         onToggle={(value) => onChange({ ...filters, markets: toggle(filters.markets, value) })}
+      />
+      <CheckGroup
+        title="Category / Topic tags"
+        options={TOPIC_TAGS.map((tag) => ({
+          value: tag,
+          label: tag,
+          count: topicCounts.get(tag) ?? 0,
+        }))}
+        selected={filters.topics}
+        onToggle={(value) => onChange({ ...filters, topics: toggle(filters.topics, value) })}
       />
       <div>
         <p className="mb-1 text-[0.78rem] font-semibold text-ink">Priority</p>

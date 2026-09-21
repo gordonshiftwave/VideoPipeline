@@ -11,6 +11,7 @@ import type {
   PostedFilter,
   Project,
   SortKey,
+  TopicTag,
 } from "@/lib/types"
 import { PRIORITIES, STATUSES } from "@/lib/types"
 
@@ -147,15 +148,39 @@ export function deadlineKind(project: Project, today: string): DeadlineKind {
   return "upcoming"
 }
 
+function dateParts(iso: string): [number, number, number] | null {
+  const head = iso.slice(0, 10)
+  if (!DATE_RE.test(head)) return null
+  const [y, m, d] = head.split("-").map(Number)
+  if (!y || !m || !d) return null
+  return [y, m, d]
+}
+
 export function formatDate(iso: string | null | undefined): string {
   if (!iso) return "—"
-  const [y, m, d] = iso.split("-").map(Number)
-  if (!y || !m || !d) return iso
+  const parts = dateParts(iso)
+  if (!parts) return iso
+  const [y, m, d] = parts
   return new Date(y, m - 1, d).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   })
+}
+
+export function isDateInput(value: string): boolean {
+  return DATE_RE.test(value)
+}
+
+/** Only http(s) links are clickable. Other strings are treated as not added. */
+export function isHttpUrl(value: string | null | undefined): value is string {
+  if (!value) return false
+  try {
+    const url = new URL(value.trim())
+    return url.protocol === "http:" || url.protocol === "https:"
+  } catch {
+    return false
+  }
 }
 
 export function deadlineLabel(project: Project, today: string): string {
@@ -173,8 +198,11 @@ export function deadlineLabel(project: Project, today: string): string {
 }
 
 export function daysFromToday(iso: string, today: string): number {
-  const [y, m, d] = iso.split("-").map(Number)
-  const [ty, tm, td] = today.split("-").map(Number)
+  const parts = dateParts(iso)
+  const todayParts = dateParts(today)
+  if (!parts || !todayParts) return 0
+  const [y, m, d] = parts
+  const [ty, tm, td] = todayParts
   const a = Date.UTC(y, m - 1, d)
   const b = Date.UTC(ty, tm - 1, td)
   return Math.round((a - b) / 86_400_000)
@@ -422,6 +450,11 @@ function unique(values: string[]): string[] {
   return [...new Set(values)]
 }
 
+function boardTopicNames(project: Project): string[] {
+  const board = project as BoardProject
+  return [...(board.confirmedTopics ?? []), ...(board.suggestedTopics ?? [])]
+}
+
 function haystack(project: Project): string {
   return [
     project.name,
@@ -438,6 +471,7 @@ function haystack(project: Project): string {
     project.evidenceLibrarySwoId,
     project.videoTopic.join(" "),
     project.requester.join(" "),
+    boardTopicNames(project).join(" "),
   ]
     .filter(Boolean)
     .join(" ")
@@ -476,7 +510,7 @@ function matchesDeadline(
 }
 
 function hasVideoLink(project: Project): boolean {
-  return Boolean(project.reviewLink || project.finalApprovedVideoLink)
+  return isHttpUrl(project.reviewLink) || isHttpUrl(project.finalApprovedVideoLink)
 }
 
 export function isPosted(platforms: PlatformMap | undefined): boolean {
@@ -534,6 +568,10 @@ export function filterProjects<T extends Project>(
     if (posted === "posted" && !isPosted(boardPlatforms(project))) return false
     if (posted === "not-posted" && isPosted(boardPlatforms(project))) return false
     if (missingPlatform && platformPosted(boardPlatforms(project), missingPlatform)) return false
+    if (filters.topics?.length) {
+      const tags = boardTopicNames(project)
+      if (!filters.topics.some((tag) => tags.includes(tag as TopicTag))) return false
+    }
     if (tokens.length) {
       const hay = haystack(project)
       if (!tokens.every((token) => hay.includes(token))) return false
@@ -562,9 +600,44 @@ function urgencyRank(project: Project, today: string): number {
   return 4
 }
 
+export function sortByManual<T extends Project>(projects: T[], order: readonly string[]): T[] {
+  const index = new Map(order.map((id, position) => [id, position]))
+  const copy = [...projects]
+  copy.sort((a, b) => {
+    const ai = index.has(a.id) ? (index.get(a.id) as number) : Number.MAX_SAFE_INTEGER
+    const bi = index.has(b.id) ? (index.get(b.id) as number) : Number.MAX_SAFE_INTEGER
+    if (ai !== bi) return ai - bi
+    return a.name.localeCompare(b.name)
+  })
+  return copy
+}
+
+/** Move one visible row. Items hidden by the current filter stay in their slots. */
+export function reorderVisible(order: readonly string[], visibleIds: readonly string[], fromIndex: number, toIndex: number): string[] {
+  if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= visibleIds.length || toIndex >= visibleIds.length) {
+    return [...order]
+  }
+  const moving = visibleIds[fromIndex]
+  const nextVisible = visibleIds.filter((_, index) => index !== fromIndex)
+  nextVisible.splice(toIndex, 0, moving)
+  const visibleSet = new Set(visibleIds)
+  const base = [...order]
+  for (const id of visibleIds) {
+    if (!base.includes(id)) base.push(id)
+  }
+  let cursor = 0
+  return base.map((id) => {
+    if (!visibleSet.has(id)) return id
+    const next = nextVisible[cursor]
+    cursor += 1
+    return next
+  })
+}
+
 export function sortProjects<T extends Project>(projects: T[], sort: SortKey, today: string): T[] {
   const copy = [...projects]
   copy.sort((a, b) => {
+    if (sort === "manual") return a.name.localeCompare(b.name)
     if (sort === "name") return a.name.localeCompare(b.name)
     if (sort === "market") {
       return a.primaryMarket.localeCompare(b.primaryMarket) || a.name.localeCompare(b.name)
@@ -616,8 +689,11 @@ export function searchProjects<T extends Project>(
   filters: ExplicitFilters,
   sort: SortKey,
   today: string,
+  order: readonly string[] = [],
 ): T[] {
-  return sortProjects(filterProjects(projects, filters, today), sort, today)
+  const filtered = filterProjects(projects, filters, today)
+  if (sort === "manual") return sortByManual(filtered, order)
+  return sortProjects(filtered, sort, today)
 }
 
 export function countBy(projects: Project[], pick: (project: Project) => string): Map<string, number> {
@@ -640,6 +716,7 @@ export const EMPTY_FILTERS: ExplicitFilters = {
   posted: "any",
   missingPlatform: "",
   pipeline: "all",
+  topics: [],
 }
 
 /** Opening view: still in the edit pipeline. Complete stays one click away. */
@@ -659,6 +736,7 @@ export function filtersAreActive(filters: ExplicitFilters): boolean {
     filters.videoLink !== "any" ||
     (filters.posted ?? "any") !== "any" ||
     Boolean(filters.missingPlatform) ||
+    (filters.topics?.length ?? 0) > 0 ||
     (filters.pipeline ?? "all") !== "active"
   )
 }

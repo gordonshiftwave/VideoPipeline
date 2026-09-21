@@ -2,7 +2,16 @@ import assert from "node:assert/strict"
 import test from "node:test"
 import snapshot from "../data/active-video-projects.json"
 import { ladderFor } from "./taxonomy"
-import { BOARD_FILTERS, EMPTY_FILTERS, normalizeProject, searchProjects } from "./projects"
+import {
+  BOARD_FILTERS,
+  EMPTY_FILTERS,
+  formatDate,
+  isPosted,
+  normalizeProject,
+  reorderVisible,
+  searchProjects,
+} from "./projects"
+import { suggestedTopics } from "./topics"
 
 const TODAY = "2026-09-21"
 
@@ -65,4 +74,57 @@ test("in pipeline hides complete until a name search or already live", () => {
 test("missing instagram is a platform filter phrase", () => {
   const missing = searchProjects(projects, { ...EMPTY_FILTERS, query: "missing instagram" }, "name", TODAY)
   assert.equal(missing.length, 92)
+})
+
+test("delivery dates stay on the calendar day", () => {
+  assert.equal(formatDate("2026-09-30"), "Sep 30, 2026")
+  assert.equal(formatDate("2026-09-30T00:00:00.000Z"), "Sep 30, 2026")
+})
+
+test("topic suggestions follow hints and skip lookalikes", () => {
+  const senior = suggestedTopics({
+    name: "Bonnie Weiss — Senior 83 Testimonial",
+    description: null,
+    questionsNotes: null,
+    primaryMarket: "At-Home",
+    videoTopic: ["Seniors  (Gordon)"],
+  })
+  assert.deepEqual(senior, ["Seniors"])
+  const lookalike = suggestedTopics({
+    name: "Seniority ladder",
+    description: "A preventative briefing",
+    questionsNotes: null,
+    primaryMarket: "Corporate",
+    videoTopic: [],
+  })
+  assert.deepEqual(lookalike, [])
+  const women = suggestedTopics({
+    name: "Clinic morning",
+    description: "Women's recovery circle",
+    questionsNotes: null,
+    primaryMarket: "Clinics / Performance Centers",
+    videoTopic: [],
+  })
+  assert.deepEqual(women, ["Women's Space"])
+})
+
+test("manual reorder keeps filtered-out rows in place", () => {
+  const next = reorderVisible(["a", "b", "c", "d", "e"], ["b", "d", "e"], 1, 0)
+  assert.deepEqual(next, ["a", "d", "c", "b", "e"])
+})
+
+test("a platform cut alone is not posted", () => {
+  assert.equal(isPosted({ instagram: { completedOn: null, url: null, cut: true } }), false)
+  assert.equal(isPosted({ instagram: { completedOn: "2026-09-30", url: null } }), true)
+})
+
+test("category filter matches a suggested tag", () => {
+  const tagged = projects.map((project) =>
+    project.name === "Julianne-senior"
+      ? { ...project, confirmedTopics: [] as const, suggestedTopics: ["Seniors"] as const }
+      : project,
+  )
+  const found = searchProjects(tagged, { ...EMPTY_FILTERS, topics: ["Seniors"] }, "name", TODAY)
+  assert.equal(found.length, 1)
+  assert.equal(found[0]?.name, "Julianne-senior")
 })

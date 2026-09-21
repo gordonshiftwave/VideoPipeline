@@ -253,11 +253,132 @@ textarea {
   border-top: 1px solid var(--color-line);
 }
 
+.board-grid {
+  grid-template-columns: 1.75rem 1.35rem minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0.45rem;
+  row-gap: 0.35rem;
+  padding: 0.55rem 0.65rem;
+}
+
+.board-rest {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .board-grid {
+    grid-template-columns:
+      1.5rem
+      1.15rem
+      5rem
+      minmax(0, 1.45fr)
+      4.1rem
+      4.6rem
+      minmax(3.6rem, 0.6fr)
+      9.6rem
+      6.4rem;
+    column-gap: 0.6rem;
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .board-rest {
+    grid-column: auto;
+  }
+}
+
 .place-row {
   border-radius: 0;
   transition:
     background-color 160ms var(--ease-out),
     box-shadow 160ms var(--ease-out);
+}
+
+.place-row[data-pulse="true"] {
+  background: var(--color-peach-tint);
+}
+
+.place-row[data-dragging="true"] {
+  background: var(--color-peach-tint);
+  cursor: grabbing;
+}
+
+.place-row[data-drop="true"] {
+  box-shadow: inset 0 2px 0 var(--color-calm);
+}
+
+.drag-handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  min-height: 2.5rem;
+  margin-top: 0.1rem;
+  color: var(--color-ink-faint);
+  cursor: grab;
+  border: 0;
+  background: transparent;
+  border-radius: 6px;
+  touch-action: none;
+}
+
+.drag-handle:hover,
+.drag-handle:focus-visible {
+  color: var(--color-ink);
+  background: var(--color-fog);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.date-picker {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-button);
+  background: var(--color-cream);
+  color: var(--color-ink);
+  padding: 0.45rem 0.65rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.date-picker--compact {
+  min-height: 2.5rem;
+  padding: 0.28rem 0.35rem;
+  font-size: 0.78rem;
+}
+
+.date-picker:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.date-picker::-webkit-calendar-picker-indicator {
+  width: 1.35rem;
+  height: 1.35rem;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.topic-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: var(--color-cream);
+  color: var(--color-ink-soft);
+  padding: 0.05rem 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.topic-pill--suggested {
+  color: var(--color-ink-faint);
+  font-weight: 500;
+  border-style: dashed;
 }
 
 .place-row:hover {

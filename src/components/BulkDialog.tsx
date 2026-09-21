@@ -1,6 +1,7 @@
+import { isDateInput } from "@/lib/projects"
 import { statusOptionLabel } from "@/lib/taxonomy"
 import { CREDIBILITY, STATUSES, type Credibility, type FieldPatch } from "@/lib/types"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export function BulkDialog({
   open,
@@ -18,13 +19,18 @@ export function BulkDialog({
   const [kpiEst, setKpiEst] = useState("")
   const [status, setStatus] = useState("")
   const [credibility, setCredibility] = useState("")
+  const dateRef = useRef<HTMLInputElement>(null)
 
-  if (!open) return null
+  useEffect(() => {
+    if (open) dateRef.current?.focus()
+  }, [open])
+
+  if (!open || count < 1) return null
 
   const patch: FieldPatch = {}
   if (clearDeadline) patch.requestorsDeadline = null
-  else if (deadline) patch.requestorsDeadline = deadline
-  if (kpiEst) patch.kpiEstDeliveryDate = kpiEst
+  else if (deadline && isDateInput(deadline)) patch.requestorsDeadline = deadline
+  if (kpiEst && isDateInput(kpiEst)) patch.kpiEstDeliveryDate = kpiEst
   if (status) patch.status = status
   const credibilityValue: Credibility | null | undefined =
     credibility === "clear" ? null : credibility === "" ? undefined : (credibility as Credibility)
@@ -52,16 +58,22 @@ export function BulkDialog({
           Update {count} project{count === 1 ? "" : "s"}
         </h2>
         <p className="mt-1 text-sm text-ink-soft">
-          Set one requester deadline, KPI estimate, or status. Blank fields stay as they are.
+          Pick a delivery date on the calendar, or set status. Blank fields stay as they are.
         </p>
         <label className="mt-4 block">
-          <span className="mb-1 block text-[0.78rem] text-ink-faint">Completion deadline</span>
+          <span className="mb-1 block text-[0.78rem] text-ink-faint">Delivery date</span>
           <input
+            ref={dateRef}
             type="date"
-            className="field"
+            className="date-picker"
+            aria-label="Delivery date"
             value={deadline}
             disabled={clearDeadline}
-            onChange={(event) => setDeadline(event.target.value)}
+            onChange={(event) => {
+              const next = event.target.value
+              if (next && !isDateInput(next)) return
+              setDeadline(next)
+            }}
           />
           <label className="mt-2 flex items-center gap-2 text-sm text-ink-soft">
             <input
@@ -70,7 +82,7 @@ export function BulkDialog({
               checked={clearDeadline}
               onChange={(event) => setClearDeadline(event.target.checked)}
             />
-            Clear requester deadline
+            Clear delivery date
           </label>
         </label>
         <label className="mt-3 block">

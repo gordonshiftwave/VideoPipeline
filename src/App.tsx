@@ -13,9 +13,10 @@ import {
   filtersAreActive,
   interpretQuery,
   isDateInput,
+  manualOrderFromDrag,
   overrideKeys,
-  reorderVisible,
   searchProjects,
+  sortByManual,
   sortProjects,
   todayISO,
 } from "@/lib/projects"
@@ -34,7 +35,7 @@ import { PLATFORMS, TABLE_URL } from "@/lib/taxonomy"
 import { splitTopics, suggestedTopics } from "@/lib/topics"
 import type { Catalog, Credibility, Density, ExplicitFilters, FieldPatch, PlatformId, SortKey, TopicTag } from "@/lib/types"
 import { TOPIC_TAGS } from "@/lib/types"
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type PointerEvent, type KeyboardEvent as ReactKeyboardEvent } from "react"
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type PointerEvent as ReactPointerEvent, type KeyboardEvent as ReactKeyboardEvent } from "react"
 
 const SORTS: { value: SortKey; label: string }[] = [
   { value: "manual", label: "Manual / Priority order" },
@@ -68,6 +69,7 @@ export function App() {
   const hydrated = useRef(false)
   const skipClose = useRef(false)
   const dragFrom = useRef<number | null>(null)
+  const dragCleanup = useRef<(() => void) | null>(null)
   const [dragIndex, setDragIndex] = useState<number | null>(null)
   const [dropIndex, setDropIndex] = useState<number | null>(null)
   const [today, setToday] = useState(() => todayISO())
@@ -363,52 +365,96 @@ export function App() {
   function commitReorder(fromIndex: number, toIndex: number) {
     if (fromIndex === toIndex || toIndex < 0 || toIndex >= visible.length) return
     const visibleIds = visible.map((project) => project.id)
-    const seeded =
-      store.order.length > 0
-        ? [...store.order]
-        : sortProjects(projects, sort === "manual" ? "urgency" : sort, today).map((project) => project.id)
-    for (const project of projects) {
-      if (!seeded.includes(project.id)) seeded.push(project.id)
-    }
-    saveOrder(reorderVisible(seeded, visibleIds, fromIndex, toIndex))
+    const onScreenIds = (
+      sort === "manual" ? sortByManual(projects, store.order) : sortProjects(projects, sort, today)
+    ).map((project) => project.id)
+    saveOrder(manualOrderFromDrag(onScreenIds, visibleIds, fromIndex, toIndex))
     setSort("manual")
     setCursor(toIndex)
     window.requestAnimationFrame(() => {
-      document.querySelector<HTMLButtonElement>(`[data-index="${toIndex}"] [data-drag-handle]`)?.focus()
+      document.querySelector<HTMLButtonElement>(`[data-index="${toIndex}"] [data-drag-handle]`)?.focus({ preventScroll: true })
     })
   }
 
-  function rowAtPoint(x: number, y: number): number | null {
-    const element = document.elementFromPoint(x, y)
-    const row = element instanceof Element ? element.closest("[data-index]") : null
-    if (!row) return null
-    const index = Number(row.getAttribute("data-index"))
-    return Number.isFinite(index) ? index : null
+  function rowIndexAtY(clientY: number): number | null {
+    const rows = document.querySelectorAll<HTMLElement>("#results [data-index]")
+    if (rows.length === 0) return null
+    for (const row of rows) {
+      const rect = row.getBoundingClientRect()
+      if (clientY < rect.top || clientY > rect.bottom) continue
+      const index = Number(row.getAttribute("data-index"))
+      return Number.isFinite(index) ? index : null
+    }
+    const firstIndex = Number(rows[0]?.getAttribute("data-index"))
+    const lastIndex = Number(rows[rows.length - 1]?.getAttribute("data-index"))
+    const first = rows[0]?.getBoundingClientRect()
+    const last = rows[rows.length - 1]?.getBoundingClientRect()
+    if (first && clientY < first.top) return Number.isFinite(firstIndex) ? firstIndex : 0
+    if (last && clientY > last.bottom) return Number.isFinite(lastIndex) ? lastIndex : rows.length - 1
+    return null
   }
 
-  function onDragStart(index: number, event: PointerEvent<HTMLButtonElement>) {
-    if (event.button !== 0) return
-    dragFrom.current = index
-    setDragIndex(index)
-    setDropIndex(index)
-    event.currentTarget.setPointerCapture(event.pointerId)
+  function clearDragListeners() {
+    dragCleanup.current?.()
+    dragCleanup.current = null
+    document.documentElement.classList.remove("vp-reordering")
   }
 
-  function onDragMove(event: PointerEvent<HTMLButtonElement>) {
-    if (dragFrom.current === null) return
-    const index = rowAtPoint(event.clientX, event.clientY)
-    if (index !== null) setDropIndex(index)
-  }
+  useEffect(() => () => {
+    dragCleanup.current?.()
+    dragCleanup.current = null
+    document.documentElement.classList.remove("vp-reordering")
+  }, [])
 
-  function onDragEnd(event: PointerEvent<HTMLButtonElement>) {
+  function finishDrag(clientY: number | null) {
+    clearDragListeners()
     const from = dragFrom.current
     dragFrom.current = null
     setDragIndex(null)
     setDropIndex(null)
-    if (from === null) return
-    const to = rowAtPoint(event.clientX, event.clientY)
+    if (from === null || clientY === null) return
+    const to = rowIndexAtY(clientY)
     if (to === null) return
     commitReorder(from, to)
+  }
+
+  function onDragStart(index: number, event: ReactPointerEvent<HTMLButtonElement>) {
+    if (event.pointerType === "mouse" && event.button !== 0) return
+    event.preventDefault()
+    event.stopPropagation()
+    clearDragListeners()
+    window.getSelection()?.removeAllRanges()
+    dragFrom.current = index
+    setDragIndex(index)
+    setDropIndex(index)
+    document.documentElement.classList.add("vp-reordering")
+    const handle = event.currentTarget
+    const pointerId = event.pointerId
+    try {
+      handle.setPointerCapture(pointerId)
+    } catch {
+      // The gesture still completes through the window listeners below.
+    }
+    handle.focus({ preventScroll: true })
+
+    const onMove = (ev: PointerEvent) => {
+      if (ev.pointerId !== pointerId) return
+      if (ev.cancelable) ev.preventDefault()
+      const next = rowIndexAtY(ev.clientY)
+      if (next !== null) setDropIndex(next)
+    }
+    const onUp = (ev: PointerEvent) => {
+      if (ev.pointerId !== pointerId) return
+      finishDrag(ev.clientY)
+    }
+    window.addEventListener("pointermove", onMove, { passive: false })
+    window.addEventListener("pointerup", onUp)
+    window.addEventListener("pointercancel", onUp)
+    dragCleanup.current = () => {
+      window.removeEventListener("pointermove", onMove)
+      window.removeEventListener("pointerup", onUp)
+      window.removeEventListener("pointercancel", onUp)
+    }
   }
 
   function onKeyboardMove(index: number, event: ReactKeyboardEvent<HTMLButtonElement>) {
@@ -654,7 +700,7 @@ export function App() {
                 {visible.length} of {projects.length}
               </h2>
               <p className="text-sm text-ink-soft">
-                Open a row to edit · Drag to prioritize · Pick a delivery date on the calendar.
+                Open a row to edit · Drag the left handle to prioritize · Pick a delivery date on the calendar.
               </p>
               <p className="text-sm text-ink-faint">
                 {filters.pipeline === "live"
@@ -662,7 +708,7 @@ export function App() {
                   : filters.pipeline === "all"
                     ? "All projects, including already live"
                     : "In pipeline"}
-                {sort === "manual" ? " · Manual order" : ""}
+                {sort === "manual" ? " · Manual / Priority" : ""}
                 {" · "}
                 {dueToday} due today
                 {overdue ? ` · ${overdue} overdue` : ""}
@@ -728,8 +774,6 @@ export function App() {
                         void persist([project.id], { requestorsDeadline })
                       }}
                       onDragStart={(event) => onDragStart(index, event)}
-                      onDragMove={onDragMove}
-                      onDragEnd={onDragEnd}
                       onKeyboardMove={(event) => onKeyboardMove(index, event)}
                     />
                   </li>

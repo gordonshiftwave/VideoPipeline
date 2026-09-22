@@ -254,7 +254,7 @@ textarea {
 }
 
 .board-grid {
-  grid-template-columns: 1.75rem 1.35rem minmax(0, 1fr);
+  grid-template-columns: 2.85rem 1.35rem minmax(0, 1fr);
   align-items: start;
   column-gap: 0.45rem;
   row-gap: 0.35rem;
@@ -262,13 +262,13 @@ textarea {
 }
 
 .board-rest {
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
 }
 
 @media (min-width: 768px) {
   .board-grid {
     grid-template-columns:
-      1.5rem
+      2.85rem
       1.15rem
       5rem
       minmax(0, 1.45fr)
@@ -288,6 +288,7 @@ textarea {
 }
 
 .place-row {
+  position: relative;
   border-radius: 0;
   transition:
     background-color 160ms var(--ease-out),
@@ -304,31 +305,75 @@ textarea {
 }
 
 .place-row[data-drop="true"] {
-  box-shadow: inset 0 2px 0 var(--color-calm);
+  box-shadow: inset 0 3px 0 var(--color-calm);
+}
+
+.drag-rail {
+  width: 2.45rem;
+  min-height: 2.75rem;
 }
 
 .drag-handle {
-  display: inline-flex;
+  position: absolute;
+  z-index: 2;
+  left: 0.65rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  min-height: 2.5rem;
-  margin-top: 0.1rem;
-  color: var(--color-ink-faint);
+  gap: 0.2rem;
+  width: 2.45rem;
+  margin: 0;
+  padding: 0.35rem 0.1rem;
+  color: var(--color-charcoal);
   cursor: grab;
-  border: 0;
-  background: transparent;
-  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--color-peach-warm) 70%, var(--color-line));
+  background: var(--color-peach);
+  border-radius: 8px;
   touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.drag-handle * {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.drag-handle__icon {
+  display: block;
+  flex: none;
+}
+
+.drag-handle__label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
 }
 
 .drag-handle:hover,
 .drag-handle:focus-visible {
-  color: var(--color-ink);
-  background: var(--color-fog);
+  color: var(--color-charcoal);
+  background: var(--color-peach-warm);
+  border-color: var(--color-peach-deep);
 }
 
-.drag-handle:active {
+.drag-handle:active,
+.place-row[data-dragging="true"] .drag-handle {
+  cursor: grabbing;
+  background: var(--color-peach-warm);
+  border-color: var(--color-peach-deep);
+}
+
+html.vp-reordering,
+html.vp-reordering * {
+  user-select: none !important;
   cursor: grabbing;
 }
 

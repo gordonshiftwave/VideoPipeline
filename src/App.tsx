@@ -13,6 +13,7 @@ import {
   filtersAreActive,
   interpretQuery,
   isDateInput,
+  indexForDropGap,
   manualOrderFromDrag,
   overrideKeys,
   searchProjects,
@@ -71,7 +72,8 @@ export function App() {
   const dragFrom = useRef<number | null>(null)
   const dragCleanup = useRef<(() => void) | null>(null)
   const [dragIndex, setDragIndex] = useState<number | null>(null)
-  const [dropIndex, setDropIndex] = useState<number | null>(null)
+  /** Row index whose top edge is the insertion line. Equal to the row count for the line under the last row. */
+  const [dropGap, setDropGap] = useState<number | null>(null)
   const [today, setToday] = useState(() => todayISO())
 
   const projects = useMemo(
@@ -376,22 +378,14 @@ export function App() {
     })
   }
 
-  function rowIndexAtY(clientY: number): number | null {
+  function dropGapAtY(clientY: number): number | null {
     const rows = document.querySelectorAll<HTMLElement>("#results [data-index]")
     if (rows.length === 0) return null
-    for (const row of rows) {
-      const rect = row.getBoundingClientRect()
-      if (clientY < rect.top || clientY > rect.bottom) continue
-      const index = Number(row.getAttribute("data-index"))
-      return Number.isFinite(index) ? index : null
+    for (let i = 0; i < rows.length; i++) {
+      const rect = rows[i].getBoundingClientRect()
+      if (clientY < rect.top + rect.height / 2) return i
     }
-    const firstIndex = Number(rows[0]?.getAttribute("data-index"))
-    const lastIndex = Number(rows[rows.length - 1]?.getAttribute("data-index"))
-    const first = rows[0]?.getBoundingClientRect()
-    const last = rows[rows.length - 1]?.getBoundingClientRect()
-    if (first && clientY < first.top) return Number.isFinite(firstIndex) ? firstIndex : 0
-    if (last && clientY > last.bottom) return Number.isFinite(lastIndex) ? lastIndex : rows.length - 1
-    return null
+    return rows.length
   }
 
   function clearDragListeners() {
@@ -411,11 +405,11 @@ export function App() {
     const from = dragFrom.current
     dragFrom.current = null
     setDragIndex(null)
-    setDropIndex(null)
+    setDropGap(null)
     if (from === null || clientY === null) return
-    const to = rowIndexAtY(clientY)
-    if (to === null) return
-    commitReorder(from, to)
+    const gap = dropGapAtY(clientY)
+    if (gap === null) return
+    commitReorder(from, indexForDropGap(from, gap))
   }
 
   function onDragStart(index: number, event: ReactPointerEvent<HTMLButtonElement>) {
@@ -426,7 +420,7 @@ export function App() {
     window.getSelection()?.removeAllRanges()
     dragFrom.current = index
     setDragIndex(index)
-    setDropIndex(index)
+    setDropGap(index)
     document.documentElement.classList.add("vp-reordering")
     const handle = event.currentTarget
     const pointerId = event.pointerId
@@ -440,8 +434,8 @@ export function App() {
     const onMove = (ev: PointerEvent) => {
       if (ev.pointerId !== pointerId) return
       if (ev.cancelable) ev.preventDefault()
-      const next = rowIndexAtY(ev.clientY)
-      if (next !== null) setDropIndex(next)
+      const next = dropGapAtY(ev.clientY)
+      if (next !== null) setDropGap((current) => (current === next ? current : next))
     }
     const onUp = (ev: PointerEvent) => {
       if (ev.pointerId !== pointerId) return
@@ -759,7 +753,17 @@ export function App() {
                       suggestedTopics={project.suggestedTopics}
                       pulse={pulseId === project.id}
                       dragging={dragIndex === index}
-                      dropTarget={dropIndex === index && dragIndex !== null && dragIndex !== index}
+                      dropEdge={
+                        dropGap === null || dragIndex === null
+                          ? null
+                          : dropGap >= visible.length
+                            ? index === visible.length - 1
+                              ? "after"
+                              : null
+                            : dropGap === index
+                              ? "before"
+                              : null
+                      }
                       selected={selected.includes(project.id)}
                       active={project.id === activeId}
                       cursor={index === cursor}

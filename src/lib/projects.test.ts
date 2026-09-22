@@ -8,6 +8,7 @@ import {
   formatDate,
   isPosted,
   normalizeProject,
+  indexForDropGap,
   manualOrderFromDrag,
   reorderVisible,
   searchProjects,
@@ -112,6 +113,26 @@ test("topic suggestions follow hints and skip lookalikes", () => {
 test("manual reorder keeps filtered-out rows in place", () => {
   const next = reorderVisible(["a", "b", "c", "d", "e"], ["b", "d", "e"], 1, 0)
   assert.deepEqual(next, ["a", "d", "c", "b", "e"])
+})
+
+test("a downward drop lands in the purple gap, not one row below it", () => {
+  const visible = ["a", "b", "c", "d"]
+  const landed = indexForDropGap(0, 2)
+  assert.equal(landed, 1)
+  assert.deepEqual(reorderVisible(visible, visible, 0, landed), ["b", "a", "c", "d"])
+  assert.deepEqual(reorderVisible(visible, visible, 0, 2), ["b", "c", "a", "d"])
+})
+
+test("an upward drop still inserts at the gap above that row", () => {
+  const visible = ["a", "b", "c", "d"]
+  assert.equal(indexForDropGap(3, 1), 1)
+  assert.deepEqual(reorderVisible(visible, visible, 3, indexForDropGap(3, 1)), ["a", "d", "b", "c"])
+})
+
+test("dropping below the last row moves to the end", () => {
+  const visible = ["a", "b", "c", "d"]
+  assert.equal(indexForDropGap(1, visible.length), 3)
+  assert.deepEqual(reorderVisible(visible, visible, 1, indexForDropGap(1, visible.length)), ["a", "c", "d", "b"])
 })
 
 test("a drag adopts the on-screen sort instead of a stale manual order", () => {

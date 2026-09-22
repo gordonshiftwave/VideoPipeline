@@ -627,6 +627,16 @@ export function manualOrderFromDrag(
   return reorderVisible(onScreenIds, visibleIds, fromIndex, toIndex)
 }
 
+/**
+ * Visible index for a pointer drop.
+ * `gapBefore` is the row whose top edge is the purple line, or `visibleCount` for the line under the last row.
+ * Dragging downward used to splice at that row and land one slot below the line.
+ */
+export function indexForDropGap(fromIndex: number, gapBefore: number): number {
+  if (gapBefore > fromIndex) return gapBefore - 1
+  return gapBefore
+}
+
 /** Move one visible row. Items hidden by the current filter stay in their slots. */
 export function reorderVisible(order: readonly string[], visibleIds: readonly string[], fromIndex: number, toIndex: number): string[] {
   if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= visibleIds.length || toIndex >= visibleIds.length) {

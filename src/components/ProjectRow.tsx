@@ -37,7 +37,7 @@ export function ProjectRow({
   confirmedTopics,
   suggestedTopics,
   dragging,
-  dropTarget,
+  dropEdge,
   pulse,
   onOpen,
   onToggle,
@@ -58,7 +58,7 @@ export function ProjectRow({
   confirmedTopics: TopicTag[]
   suggestedTopics: TopicTag[]
   dragging: boolean
-  dropTarget: boolean
+  dropEdge: "before" | "after" | null
   pulse: boolean
   onOpen: () => void
   onToggle: (shiftKey: boolean) => void
@@ -85,7 +85,7 @@ export function ProjectRow({
       data-active={active}
       data-cursor={cursor}
       data-dragging={dragging}
-      data-drop={dropTarget}
+      data-drop={dropEdge ?? undefined}
       data-pulse={pulse}
       className="place-row board-grid grid"
       onClick={(event) => {
@@ -207,7 +207,7 @@ export function BoardHead() {
   const labels = ["Market", "Project", "Recorded", "Posted", "Links", "Due", "Status"]
   return (
     <div className="board-grid hidden border-b border-line py-2 text-[0.72rem] font-semibold text-ink-faint md:grid">
-      <span>Drag</span>
+      <span className="text-center">Drag</span>
       <span />
       {labels.map((label) => (
         <span key={label}>{label}</span>

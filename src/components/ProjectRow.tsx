@@ -43,8 +43,6 @@ export function ProjectRow({
   onToggle,
   onDeadline,
   onDragStart,
-  onDragMove,
-  onDragEnd,
   onKeyboardMove,
 }: {
   project: Project
@@ -66,8 +64,6 @@ export function ProjectRow({
   onToggle: (shiftKey: boolean) => void
   onDeadline: (value: string | null) => void
   onDragStart: (event: PointerEvent<HTMLButtonElement>) => void
-  onDragMove: (event: PointerEvent<HTMLButtonElement>) => void
-  onDragEnd: (event: PointerEvent<HTMLButtonElement>) => void
   onKeyboardMove: (event: KeyboardEvent<HTMLButtonElement>) => void
 }) {
   const kind = deadlineKind(project, today)
@@ -99,20 +95,25 @@ export function ProjectRow({
         onOpen()
       }}
     >
-      <button
-        type="button"
-        className="drag-handle focus-ring order-1"
-        data-drag-handle
-        aria-label={`Drag to prioritize ${project.name}`}
-        title="Drag to prioritize"
-        onPointerDown={onDragStart}
-        onPointerMove={onDragMove}
-        onPointerUp={onDragEnd}
-        onPointerCancel={onDragEnd}
-        onKeyDown={onKeyboardMove}
-      >
-        <GripIcon />
-      </button>
+      <div className="drag-rail order-1">
+        <button
+          type="button"
+          className="drag-handle focus-ring"
+          data-drag-handle
+          draggable={false}
+          aria-label={`Drag to prioritize ${project.name}`}
+          aria-keyshortcuts="ArrowUp ArrowDown"
+          title="Drag to prioritize. Arrow up or down moves this row."
+          onPointerDown={onDragStart}
+          onKeyDown={onKeyboardMove}
+          onDragStart={(event) => event.preventDefault()}
+        >
+          <GripIcon />
+          <span className="drag-handle__label" aria-hidden="true">
+            Drag
+          </span>
+        </button>
+      </div>
       <label className="order-2 flex items-start pt-1.5 md:pt-2.5">
         <input
           type="checkbox"
@@ -206,7 +207,7 @@ export function BoardHead() {
   const labels = ["Market", "Project", "Recorded", "Posted", "Links", "Due", "Status"]
   return (
     <div className="board-grid hidden border-b border-line py-2 text-[0.72rem] font-semibold text-ink-faint md:grid">
-      <span />
+      <span>Drag</span>
       <span />
       {labels.map((label) => (
         <span key={label}>{label}</span>
@@ -250,13 +251,13 @@ function RowLink({ href, label }: { href: string | null; label: string }) {
 
 function GripIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-      <circle cx="4" cy="3" r="1.15" fill="currentColor" />
-      <circle cx="10" cy="3" r="1.15" fill="currentColor" />
-      <circle cx="4" cy="7" r="1.15" fill="currentColor" />
-      <circle cx="10" cy="7" r="1.15" fill="currentColor" />
-      <circle cx="4" cy="11" r="1.15" fill="currentColor" />
-      <circle cx="10" cy="11" r="1.15" fill="currentColor" />
+    <svg className="drag-handle__icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+      <circle cx="5.5" cy="3.5" r="1.45" fill="currentColor" />
+      <circle cx="12.5" cy="3.5" r="1.45" fill="currentColor" />
+      <circle cx="5.5" cy="9" r="1.45" fill="currentColor" />
+      <circle cx="12.5" cy="9" r="1.45" fill="currentColor" />
+      <circle cx="5.5" cy="14.5" r="1.45" fill="currentColor" />
+      <circle cx="12.5" cy="14.5" r="1.45" fill="currentColor" />
     </svg>
   )
 }

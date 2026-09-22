@@ -612,6 +612,21 @@ export function sortByManual<T extends Project>(projects: T[], order: readonly s
   return copy
 }
 
+/**
+ * Manual order to save after a drag.
+ * `onScreenIds` is every project in the order the board is showing for the active sort.
+ * Pass that list, not an older stored order, so the rows stay where the user just put them.
+ * Items hidden by the current filter keep their slots inside `onScreenIds`.
+ */
+export function manualOrderFromDrag(
+  onScreenIds: readonly string[],
+  visibleIds: readonly string[],
+  fromIndex: number,
+  toIndex: number,
+): string[] {
+  return reorderVisible(onScreenIds, visibleIds, fromIndex, toIndex)
+}
+
 /** Move one visible row. Items hidden by the current filter stay in their slots. */
 export function reorderVisible(order: readonly string[], visibleIds: readonly string[], fromIndex: number, toIndex: number): string[] {
   if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= visibleIds.length || toIndex >= visibleIds.length) {

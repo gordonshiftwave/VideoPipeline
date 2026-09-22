@@ -8,6 +8,7 @@ import {
   formatDate,
   isPosted,
   normalizeProject,
+  manualOrderFromDrag,
   reorderVisible,
   searchProjects,
 } from "./projects"
@@ -111,6 +112,14 @@ test("topic suggestions follow hints and skip lookalikes", () => {
 test("manual reorder keeps filtered-out rows in place", () => {
   const next = reorderVisible(["a", "b", "c", "d", "e"], ["b", "d", "e"], 1, 0)
   assert.deepEqual(next, ["a", "d", "c", "b", "e"])
+})
+
+test("a drag adopts the on-screen sort instead of a stale manual order", () => {
+  const onScreen = ["c", "a", "hidden", "b"]
+  const stale = ["a", "hidden", "b", "c"]
+  const visible = ["c", "a", "b"]
+  assert.deepEqual(manualOrderFromDrag(onScreen, visible, 2, 0), ["b", "c", "hidden", "a"])
+  assert.deepEqual(reorderVisible(stale, visible, 2, 0), ["b", "hidden", "c", "a"])
 })
 
 test("a platform cut alone is not posted", () => {
